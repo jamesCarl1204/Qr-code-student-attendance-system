@@ -54,18 +54,82 @@
     background-color: white;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    box-shadow: 3px 2px  3px
+    box-shadow: 3px 2px  3px;
+    animation-name: loginAnimation;
+    animation-duration: 3s
 }
 
 .login-desc{
-   background: var(--blue);
+   background: linear-gradient(160deg, var(--blue) 0%, var(--navy) 100%);
    color:white;
    display: flex;
    justify-content: center;
    align-items:center;
    font-size: 2rem;
+   padding: 40px 30px;
+   font-family:var(--font-mono);
+   position:relative;
+   overflow:hidden;
+   border-radius: 30px 0 0 30px;
    
 }
+.login-desc-content {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    text-align: center;
+    gap:10px;
+    z-index: 1
+}
+
+
+.login-desc h3 {
+    color: var(--gray-light);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.login-desc h1 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 10px;
+}
+
+.login-desc .tagline {
+    color: var(--gray-light);
+    font-size: 0.9rem;
+    font-weight: 300;
+    max-width: 260px;
+    line-height: 1.5;
+}
+
+.login-desc::before,
+.login-desc::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+
+.login-desc::before {
+    width: 250px;
+    height: 250px;
+    top: -80px;
+    right: -80px;
+}
+
+.login-desc::after {
+    width: 180px;
+    height: 180px;
+    bottom: -60px;
+    left: -60px;
+}
+
 .login-options, .student-login-form, .teacher-login-form, .student-register {
     grid-column: 2;
     grid-row: 1
@@ -73,7 +137,8 @@
 
 .login-desc {
     padding:10px;
-    font-family: var(--font-mono)
+    font-family: var(--font-mono);
+    
 }
 .login-desc h3{
    color: var(--navy-dark)
@@ -140,4 +205,8 @@
     border-radius: 10px
 }
 
+/**@keyframes loginAnimation {
+    from {grid-template-columns:1fr 1fr}
+    to {grid-template-columns: 0.1px 1fr}
+}**/
 
