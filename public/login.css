@@ -1,0 +1,143 @@
+* {
+    margin: 0
+}
+
+:root {
+    /* Navy shades */
+    --navy-darkest: #0b1631;
+    --navy-dark: #10162b;
+    --navy: #122349;
+    --navy-light: #1b2244;
+    --navy-lighter: #161d38;
+
+    /* Accent blue (para sa buttons, links, highlights) */
+    --blue: #2563eb;
+    --blue-dark: #1d4ed8;
+    --blue-light: #3b74ff;
+
+    /* Neutrals */
+    --white: #ffffff;
+    --gray-light: #f3f5fb;
+    --gray: #a7afc7;
+    --gray-dark: #4b5568;
+    --ink: #14181f;
+
+    /* Semantic colors (status) */
+    --success: #16a34a;
+    --danger: #dc2626;
+    --warning: #ea580c;
+
+    /* Spacing/radius, konektado sa alam mo na */
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 22px;
+
+    --font-primary: 'Inter', 'segoe UI', Roboto, Arial, sans-serif;
+    --font-heading: 'Poppins', 'Segoe UI', sans-serif;
+    --font-mono: 'Consolas', 'Courier New', nonospace
+}
+
+.container{
+    height:100vh;
+    width:100%;
+    background-color: rgb(0,0,0,0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.login-container{
+    width: 800px;
+    height: 700px;
+    border-radius: 30px;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-shadow: 3px 2px  3px
+}
+
+.login-desc{
+   background: var(--blue);
+   color:white;
+   display: flex;
+   justify-content: center;
+   align-items:center;
+   font-size: 2rem;
+   
+}
+.login-options, .student-login-form, .teacher-login-form, .student-register {
+    grid-column: 2;
+    grid-row: 1
+}
+
+.login-desc {
+    padding:10px;
+    font-family: var(--font-mono)
+}
+.login-desc h3{
+   color: var(--navy-dark)
+}
+
+.login-options{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    flex-direction:column;
+    gap:50px;
+    font-size: 1.2rem;
+    
+}
+
+.student-login{
+    background-color: var(--navy);
+    color:white;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.teacher-login{
+    background-color: var(--navy);
+    color:white;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px; 
+}
+
+.student-login-form, .teacher-login-form, .student-register {
+    display: none;
+    flex-direction: column;
+    padding: 10px;
+    justify-content:center;
+    border: var(--blue);
+    font-family: var(--font-mono);
+    font-size: 1.3rem
+}
+.student-login-form input,
+ .student-login-form button,
+  .student-login-form h3,
+  .teacher-login-form input,
+  .teacher-login-form button,
+  .teacher-login-form h3,
+  .student-register input,
+  .student-register button,
+  .student-register h3{
+    height: 30px;
+    margin-bottom: 10px;
+    font-family: var(--font-mono);
+    font-size: 1.3rem
+}
+
+.student-login-form input, .teacher-login-form input {
+    border: 3px solid var(--blue);
+    border-radius: 10px
+}
+
+
