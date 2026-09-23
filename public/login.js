@@ -11,8 +11,13 @@ const email = document.getElementById('email-input')
 const password = document.getElementById('password-input')
 const confirmPassword = document.getElementById('password-confirm')
 const parentEmail = document.getElementById('parent-email')
+const studentId = document.getElementById('student-id')
 
-
+const idErr = document.getElementById('id-err')
+const regEmailErr = document.getElementById('email-err')
+const regPasswordErr = document.getElementById('password-err')
+const regConfirmErr = document.getElementById('confirm-err')
+const regParentEmailErr = document.getElementById('parent-email-err')
 
 document.querySelector('.student-login').addEventListener('click', () => {
     options.style.display = "none"
@@ -42,6 +47,12 @@ registerBtn.addEventListener('click', async (e) => {
 
     e.preventDefault()
 
+        regEmailErr.textContent = ''
+        regPasswordErr.textContent = ''
+        idErr.textContent = ''
+        regConfirmErr.textContent = ''
+
+
     const nameVal = name.value;
     const middleNameVal = middlename.value;
     const lastNameVal = lastname.value;
@@ -49,21 +60,40 @@ registerBtn.addEventListener('click', async (e) => {
     const passwordVal = password.value;
     const confirmPasswordVal= confirmPassword.value;
     const parentEmailVal = parentEmail.value;
+    const studentIdVal = studentId.value
 
-    const response = fetch('/register', {
+    try {
+    const response = await fetch('/api/student/register', {
+
+        
         method: 'POST',
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify({
             name: nameVal,
             middleName:middleNameVal,
             lastName: lastNameVal,
+            studentId: studentIdVal,
             email: emailVal,
             password: passwordVal,
             confirmPassword: confirmPasswordVal,
-            parentEmail: parentEmailVal
+            parentEmail: parentEmailVal,
         })
     })
 
-    const data = response.json();
+    const data = await response.json(); 
+       
+    if(data.errors) {
+        
+        data.errors.forEach(err => {
+            if(err.path === 'email') regEmailErr.textContent = err.msg
+            if(err.path === 'password') regPasswordErr.textContent = err.msg
+            if(err.path === 'studentId') idErr.textContent = err.msg
+            if(err.path === 'confirmPassword') regConfirmErr.textContent = err.msg
+        })
+    }
+} 
+catch(err) {
+    console.log(err)
+}
     
 })

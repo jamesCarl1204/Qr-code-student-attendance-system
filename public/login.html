@@ -42,11 +42,11 @@
             <form class="student-login-form">
                 <h3>Student Login</h3>
                 <label>Email</label>
-                <div id="email-err"></div>
+                <div id="stud-email-err"></div>
                 <input placeholder="Enter email...">
                 <label>Password</label>
                 <input placeholder="Enter password...">
-                <div id="password-err"></div>
+                <div id="stud-password-err"></div>
                 <button id="login-btn">Login</button>
                 <button type="button" class="back-btn" data-target="options">&larr; back</button>
 
@@ -55,11 +55,11 @@
             <form class="teacher-login-form">
                 <h3>Teacher Login</h3>
                 <label>Email</label>
-                <div id="email-err"></div>
+                <div id="t-login-email-err"></div>
                 <input placeholder="enter email...">
                 <label>Password</label>
                 <input placeholder="enter password...">
-                <div id="password-err"></div>
+                <div id="t-log-password-err"></div>
                 <button id="login-btn">Login</button>
                 <button type="button" class="back-btn"  data-target="options">&larr; back</button>
             </form>
@@ -70,10 +70,16 @@
                 <input id="name-input" placeholder="Enter name..." required>
                 <input id="middlename-input" placeholder="Optional Enter middlename...">
                 <input id="lastname-input" placeholder="Enter lastname..." required>
-                <input id="email-input" placeholder="Enter email...">
-                <input id="password-input" placeholder="Enter password...">
-                <input id="password-confirm" placeholder="confirm password...">
-                <input id="parent-email" placeholder="parent/guardian email...">
+                <input id="student-id" placeholder="Enter Id..." required>
+                <div id="id-err"></div>
+                <input id="email-input" placeholder="Enter email..." required>
+                <div id="email-err"></div>
+                <input id="password-input" placeholder="Enter password..." required>
+                <div id="password-err"></div>
+                <input id="password-confirm" placeholder="confirm password..." required>
+                <div id="confirm-err"></div>
+                <input id="parent-email" placeholder="parent/guardian email..." required>
+                <div id="parent-email-err"></div>
                 <button id="register-btn">Register Account</button>
                 <button type="button" class="back-btn" >back</button>
                 
