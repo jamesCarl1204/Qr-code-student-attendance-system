@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal</title>
+    <link rel="stylesheet" href="/studentPortal/student-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <div class="logo-circle"><i class="fa-solid fa-qrcode"></i></div>
+            <span class="brand-text">Regis Marie College</span>
+        </div>
+
+        <div class="navbar-actions">
+            <button class="btn btn-outline" id="join-class-btn">
+                <i class="fa-solid fa-plus"></i>
+                Join Class
+            </button>
+            <button class="btn btn-danger" id="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </button>
+        </div>
+    </nav>
+
+    <div class="layout">
+
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="sidebar-item active" data-target="classes">
+                    <i class="fa-solid fa-chalkboard"></i>
+                    <span>Classes</span>
+                </li>
+                <li class="sidebar-item" data-target="archived">
+                    <i class="fa-solid fa-box-archive"></i>
+                    <span>Archived Classes</span>
+                </li>
+                <li class="sidebar-item" data-target="scan">
+                    <i class="fa-solid fa-qrcode"></i>
+                    <span>Scan</span>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+
+            <section class="view" id="view-classes">
+                <div class="view-header">
+                    <h1>My Classes</h1>
+                    <p class="view-subtitle">Classes you're currently enrolled in</p>
+                </div>
+
+                <div class="class-grid" id="classes-grid">
+                    <div class="empty-state">
+                        <i class="fa-solid fa-chalkboard"></i>
+                        <p>You haven't joined any classes yet.</p>
+                        <button class="btn btn-outline">
+                            <i class="fa-solid fa-plus"></i>
+                            Join your first class
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="view" id="view-archived" style="display:none">
+                <div class="view-header">
+                    <h1>Archived Classes</h1>
+                    <p class="view-subtitle">Classes no longer active</p>
+                </div>
+
+                <div class="class-grid" id="archived-grid">
+                    <div class="empty-state">
+                        <i class="fa-solid fa-box-archive"></i>
+                        <p>No archived classes.</p>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="view" id="view-scan" style="display:none">
+                <div class="view-header">
+                    <h1>Scan Attendance</h1>
+                    <p class="view-subtitle">Scan your class QR code to mark attendance</p>
+                </div>
+
+                <div class="scan-box">
+                    <i class="fa-solid fa-qrcode"></i>
+                    <p>Camera preview will appear here</p>
+                    <button class="btn btn-primary">
+                        <i class="fa-solid fa-camera"></i>
+                        Start Scanning
+                    </button>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="/studentPortal/student-dashboard.js"></script>
+</body>
+</html>

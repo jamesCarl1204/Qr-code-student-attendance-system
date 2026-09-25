@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -13,20 +13,18 @@
         <div class="login-container">
 
             <div class="login-desc">
-                <div class-login-decs-content>
-                <img src>
-                <h3>Regis Marie College</h3>
-                <h2>Qr code-based Student Attendance System</h1>
-                <p class="tagline">Fast, accurate, and paperless attendance</p>
+                <div class="login-desc-content">
+                    <div class="logo-circle"><i class="fa-solid fa-qrcode"></i></div>
+                    <h3>Regis Marie College</h3>
+                    <h2>Qr code-based Student Attendance System</h2>
+                    <p class="tagline">Fast, accurate, and paperless attendance</p>
                 </div>
             </div>
 
             <div class="login-options">
-
                 <div class="student-login" data-target="1">
                     <i class="fa-solid fa-graduation-cap"></i>
                     <h2>Student Login</h2>
-                    
                 </div>
 
                 <div class="teacher-login" data-target="2">
@@ -35,63 +33,106 @@
                 </div>
 
                 <div id="register-account"><a>New student? Register here</a></div>
-
             </div>
-
 
             <form class="student-login-form">
                 <h3>Student Login</h3>
-                <label>Email</label>
-                <div id="stud-email-err"></div>
-                <input placeholder="Enter email...">
-                <label>Password</label>
-                <input placeholder="Enter password...">
-                <div id="stud-password-err"></div>
-                <button id="login-btn">Login</button>
-                <button type="button" class="back-btn" data-target="options">&larr; back</button>
 
+                <label>Email</label>
+                <div class="input-wrap">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" placeholder="Enter email...">
+                </div>
+                <div id="stud-email-err" class="err"></div>
+
+                <label>Password</label>
+                <div class="input-wrap">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="Enter password...">
+                </div>
+                <div id="stud-password-err" class="err"></div>
+
+                <button id="-student-login-btn">Login</button>
+                <button type="button" class="back-btn" data-target="options">&larr; back</button>
             </form>
 
             <form class="teacher-login-form">
                 <h3>Teacher Login</h3>
+
                 <label>Email</label>
-                <div id="t-login-email-err"></div>
-                <input placeholder="enter email...">
+                <div class="input-wrap">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" placeholder="Enter email...">
+                </div>
+                <div id="t-login-email-err" class="err"></div>
+
                 <label>Password</label>
-                <input placeholder="enter password...">
-                <div id="t-log-password-err"></div>
-                <button id="login-btn">Login</button>
-                <button type="button" class="back-btn"  data-target="options">&larr; back</button>
+                <div class="input-wrap">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="Enter password...">
+                </div>
+                <div id="t-log-password-err" class="err"></div>
+
+                <button id="teacher-login-btn">Login</button>
+                <button type="button" class="back-btn" data-target="options">&larr; back</button>
             </form>
 
-
-             <form class="student-register">
+            <form class="student-register">
                 <h3>Register</h3>
-                <input id="name-input" placeholder="Enter name..." required>
-                <input id="middlename-input" placeholder="Optional Enter middlename...">
-                <input id="lastname-input" placeholder="Enter lastname..." required>
-                <input id="student-id" placeholder="Enter Id..." required>
-                <div id="id-err"></div>
-                <input id="email-input" placeholder="Enter email..." required>
-                <div id="email-err"></div>
-                <input id="password-input" placeholder="Enter password..." required>
-                <div id="password-err"></div>
-                <input id="password-confirm" placeholder="confirm password..." required>
-                <div id="confirm-err"></div>
-                <input id="parent-email" placeholder="parent/guardian email..." required>
-                <div id="parent-email-err"></div>
+
+                <div class="input-wrap">
+                    <i class="fa-solid fa-user"></i>
+                    <input id="name-input" placeholder="Enter name..." required>
+                </div>
+
+                <div class="input-wrap">
+                    <i class="fa-solid fa-user"></i>
+                    <input id="middlename-input" placeholder="Middlename (optional)">
+                </div>
+
+                <div class="input-wrap">
+                    <i class="fa-solid fa-user"></i>
+                    <input id="lastname-input" placeholder="Enter lastname..." required>
+                </div>
+
+                <div class="input-wrap">
+                    <i class="fa-solid fa-id-card"></i>
+                    <input id="student-id" placeholder="Enter student ID..." required>
+                </div>
+                <div id="id-err" class="err"></div>
+
+                <div class="input-wrap">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input id="email-input" type="email" placeholder="Enter email..." required>
+                </div>
+                <div id="email-err" class="err"></div>
+
+                <div class="input-wrap">
+                    <i class="fa-solid fa-lock"></i>
+                    <input id="password-input" type="password" placeholder="Enter password..." required>
+                </div>
+                <div id="password-err" class="err"></div>
+
+                <div class="input-wrap">
+                    <i class="fa-solid fa-lock"></i>
+                    <input id="password-confirm" type="password" placeholder="Confirm password..." required>
+                </div>
+                <div id="confirm-err" class="err"></div>
+
+                <div class="input-wrap">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input id="parent-email" type="email" placeholder="Parent/guardian email..." required>
+                </div>
+                <div id="parent-email-err" class="err"></div>
+
                 <button id="register-btn">Register Account</button>
-                <button type="button" class="back-btn" >back</button>
-                
+                <button type="button" class="back-btn" data-target="options">&larr; back</button>
             </form>
-            
+
         </div>
     </div>
-    
 
     <script src="login.js"></script>
 </body>
 </html>
-
-
 

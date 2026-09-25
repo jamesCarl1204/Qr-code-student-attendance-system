@@ -1,102 +1,96 @@
 * {
-    margin: 0
+    margin: 0;
+    box-sizing: border-box;
 }
 
 :root {
-    /* Navy shades */
     --navy-darkest: #0b1631;
     --navy-dark: #10162b;
     --navy: #122349;
-    --navy-light: #1b2244;
-    --navy-lighter: #161d38;
-
-    /* Accent blue (para sa buttons, links, highlights) */
     --blue: #2563eb;
     --blue-dark: #1d4ed8;
-    --blue-light: #3b74ff;
-
-    /* Neutrals */
     --white: #ffffff;
     --gray-light: #f3f5fb;
     --gray: #a7afc7;
     --gray-dark: #4b5568;
     --ink: #14181f;
-
-    /* Semantic colors (status) */
-    --success: #16a34a;
     --danger: #dc2626;
-    --warning: #ea580c;
-
-    /* Spacing/radius, konektado sa alam mo na */
     --radius-sm: 8px;
     --radius-md: 14px;
-    --radius-lg: 22px;
-
-    --font-primary: 'Inter', 'segoe UI', Roboto, Arial, sans-serif;
+    --font-primary: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
     --font-heading: 'Poppins', 'Segoe UI', sans-serif;
-    --font-mono: 'Consolas', 'Courier New', nonospace
 }
 
-.container{
-    height:100vh;
-    width:100%;
-    background-color: rgb(0,0,0,0.2);
+body {
+    font-family: var(--font-primary);
+}
+
+.container {
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, var(--navy-darkest) 0%, var(--navy) 100%);
     display: flex;
     justify-content: center;
     align-items: center;
-    
 }
 
-.login-container{
+.login-container {
     width: 800px;
     height: 700px;
-    border-radius: 30px;
-    background-color: white;
+    border-radius: 24px;
+    background-color: var(--white);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    box-shadow: 3px 2px  3px;
-    animation-name: loginAnimation;
-    animation-duration: 3s
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
 }
 
-.login-desc{
-   background: linear-gradient(160deg, var(--blue) 0%, var(--navy) 100%);
-   color:white;
-   display: flex;
-   justify-content: center;
-   align-items:center;
-   font-size: 2rem;
-   padding: 40px 30px;
-   font-family:var(--font-mono);
-   position:relative;
-   overflow:hidden;
-   border-radius: 30px 0 0 30px;
-   
+.login-desc {
+    background: linear-gradient(160deg, var(--blue) 0%, var(--navy) 100%);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 30px;
+    position: relative;
+    overflow: hidden;
 }
+
 .login-desc-content {
     display: flex;
     flex-direction: column;
-    align-items:center;
+    align-items: center;
     text-align: center;
-    gap:10px;
-    z-index: 1
+    gap: 12px;
+    z-index: 1;
 }
 
+.logo-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin-bottom: 8px;
+    border: 2px solid rgba(255,255,255,0.3);
+}
 
 .login-desc h3 {
     color: var(--gray-light);
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 500;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 5px;
 }
 
-.login-desc h1 {
-    font-size: 1.7rem;
+.login-desc h2 {
+    font-size: 1.6rem;
     font-weight: 700;
     line-height: 1.35;
-    margin-bottom: 10px;
+    font-family: var(--font-heading);
 }
 
 .login-desc .tagline {
@@ -112,101 +106,209 @@
     content: '';
     position: absolute;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255,255,255,0.06);
 }
+.login-desc::before { width: 250px; height: 250px; top: -80px; right: -80px; }
+.login-desc::after { width: 180px; height: 180px; bottom: -60px; left: -60px; }
 
-
-.login-desc::before {
-    width: 250px;
-    height: 250px;
-    top: -80px;
-    right: -80px;
-}
-
-.login-desc::after {
-    width: 180px;
-    height: 180px;
-    bottom: -60px;
-    left: -60px;
-}
-
-.login-options, .student-login-form, .teacher-login-form, .student-register {
+.login-options,
+.student-login-form,
+.teacher-login-form,
+.student-register {
     grid-column: 2;
-    grid-row: 1
+    grid-row: 1;
+    padding: 50px 45px;
+    align-self: center;
+    max-height: 100%;
+    overflow-y: auto;
 }
 
-.login-desc {
-    padding:10px;
-    font-family: var(--font-mono);
-    
-}
-.login-desc h3{
-   color: var(--navy-dark)
-}
-
-.login-options{
+.login-options {
     display: flex;
     justify-content: center;
-    align-items:center;
-    flex-direction:column;
-    gap:50px;
-    font-size: 1.2rem;
-    
+    flex-direction: column;
+    gap: 16px;
 }
 
-.student-login{
-    background-color: var(--navy);
-    color:white;
-    padding: 20px;
+.student-login,
+.teacher-login {
+    background: var(--gray-light);
+    color: var(--ink);
+    padding: 20px 24px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.student-login:hover,
+.teacher-login:hover {
+    border-color: var(--blue);
+    background: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.12);
+}
+
+.student-login i,
+.teacher-login i {
+    font-size: 20px;
+    color: var(--blue);
+    width: 40px;
+    height: 40px;
+    background: var(--white);
     border-radius: 10px;
     display: flex;
-    justify-content:center;
-    align-items:center;
-    gap:10px;
+    align-items: center;
+    justify-content: center;
 }
 
-.teacher-login{
-    background-color: var(--navy);
-    color:white;
-    padding: 20px;
-    border-radius: 10px;
-    display: flex;
-    justify-content:center;
-    align-items:center;
-    gap:10px; 
+.student-login h2,
+.teacher-login h2 {
+    font-size: 1rem;
+    font-weight: 600;
 }
 
-.student-login-form, .teacher-login-form, .student-register {
+#register-account {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--gray-dark);
+}
+
+#register-account a {
+    color: var(--blue);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.student-login-form,
+.teacher-login-form,
+.student-register {
     display: none;
     flex-direction: column;
-    padding: 10px;
-    justify-content:center;
-    border: var(--blue);
-    font-family: var(--font-mono);
-    font-size: 1.3rem
 }
-.student-login-form input,
- .student-login-form button,
-  .student-login-form h3,
-  .teacher-login-form input,
-  .teacher-login-form button,
-  .teacher-login-form h3,
-  .student-register input,
-  .student-register button,
-  .student-register h3{
-    height: 30px;
+
+.student-login-form h3,
+.teacher-login-form h3,
+.student-register h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--navy);
+}
+
+.student-login-form label,
+.teacher-login-form label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gray-dark);
+    margin-bottom: 6px;
+    margin-top: 4px;
+}
+
+
+.input-wrap {
+    position: relative;
+    margin-bottom: 4px;
+}
+
+.input-wrap i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+    font-size: 14px;
+}
+
+.input-wrap input {
+    width: 100%;
+    height: 46px;
+    padding: 0 16px 0 42px;
+    border: 1.5px solid #e2e5ee;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+
+.input-wrap input:focus {
+    border-color: var(--blue);
+}
+
+.input-wrap input:focus + i,
+.input-wrap:focus-within i {
+    color: var(--blue);
+}
+
+.err {
+    color: var(--danger);
+    font-size: 0.8rem;
+    min-height: 16px;
     margin-bottom: 10px;
-    font-family: var(--font-mono);
-    font-size: 1.3rem
 }
 
-.student-login-form input, .teacher-login-form input {
-    border: 3px solid var(--blue);
-    border-radius: 10px
+button#login-btn,
+button#teacher-login-btn,
+button#register-btn {
+    height: 46px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.15s ease;
 }
 
-/**@keyframes loginAnimation {
-    from {grid-template-columns:1fr 1fr}
-    to {grid-template-columns: 0.1px 1fr}
-}**/
+button#login-btn:hover,
+button#teacher-login-btn:hover,
+button#register-btn:hover {
+    background: var(--blue-dark);
+}
 
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--gray-dark);
+    font-size: 0.85rem;
+    cursor: pointer;
+    margin-top: 12px;
+    text-align: left;
+    padding: 0;
+}
+
+.back-btn:hover {
+    color: var(--blue);
+}
+
+.student-register .input-wrap {
+    margin-bottom: 14px;
+}
+
+.student-register .input-wrap + .err {
+    margin-top: -10px;
+    margin-bottom: 4px;
+}
+
+.err:empty {
+    min-height: 0;
+    margin-bottom: 0;
+    .err {
+    color: var(--danger);
+    font-size: 0.8rem;
+    min-height: 16px;
+    margin-bottom: 10px;
+}
+
+.err:empty {
+    min-height: 0;
+    margin-bottom: 0;
+}
+}
