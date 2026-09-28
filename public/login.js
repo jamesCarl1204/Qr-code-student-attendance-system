@@ -1,9 +1,28 @@
+const modal = document.getElementById('auth-modal')
+const modalTitle = document.getElementById('modal-title')
+const modalSubtitle = document.getElementById('modal-subtitle')
+const modalToggleText = document.getElementById('modal-toggle-text')
 
-const options = document.querySelector('.login-options')
-const studentLoginForm = document.querySelector('.student-login-form')
-const teacherLoginForm = document.querySelector('.teacher-login-form')
-const registerForm = document.querySelector('.student-register')
+const studentLoginForm = document.getElementById('student-login-form')
+const teacherLoginForm = document.getElementById('teacher-login-form')
+const studentRegisterForm = document.getElementById('student-register-form')
 
+let currentRole = 'student'   // 'student' | 'teacher'
+let currentMode = 'login'     // 'login' | 'register'
+
+const studEmailInput = document.getElementById('stud-email')
+const studPasswordInput = document.getElementById('stud-password')
+const studentLoginErrorElements = {
+    email: document.getElementById('stud-email-err'),
+    password: document.getElementById('stud-password-err'),
+}
+
+const teacherEmailInput = document.getElementById('t-login-email')
+const teacherPasswordInput = document.getElementById('t-login-password')
+const teacherLoginErrorElements = {
+    email: document.getElementById('t-login-email-err'),
+    password: document.getElementById('t-log-password-err'),
+}
 
 const nameInput = document.getElementById('name-input')
 const middlenameInput = document.getElementById('middlename-input')
@@ -14,10 +33,7 @@ const passwordInput = document.getElementById('password-input')
 const confirmPasswordInput = document.getElementById('password-confirm')
 const parentEmailInput = document.getElementById('parent-email')
 
-
 const registerErrorElements = {
-    name: null, 
-    lastName: null,
     studentId: document.getElementById('id-err'),
     email: document.getElementById('email-err'),
     password: document.getElementById('password-err'),
@@ -25,39 +41,52 @@ const registerErrorElements = {
     parentEmail: document.getElementById('parent-email-err'),
 }
 
+function openModal(role) {
+    currentRole = role
+    currentMode = 'login'
+    updateModalUI()
+    modal.classList.remove('hidden')
+}
 
-const studentEmailInput = studentLoginForm.querySelector('input[type="email"]')
-const studentPasswordInput = studentLoginForm.querySelector('input[type="password"]')
-const studentLoginErrorElements = {
-    email: document.getElementById('stud-email-err'),
-    password: document.getElementById('stud-password-err'),
+function closeModal() {
+    modal.classList.add('hidden')
+}
+
+function toggleMode() {
+    currentMode = currentMode === 'login' ? 'register' : 'login'
+    updateModalUI()
+}
+
+function updateModalUI() {
+    studentLoginForm.classList.add('hidden')
+    teacherLoginForm.classList.add('hidden')
+    studentRegisterForm.classList.add('hidden')
+
+    if (currentRole === 'student' && currentMode === 'login') {
+        modalTitle.textContent = 'Student Sign In'
+        modalSubtitle.textContent = 'Enter your student credentials'
+        studentLoginForm.classList.remove('hidden')
+        modalToggleText.innerHTML = `New student? <button type="button" id="toggle-mode-btn">Register here</button>`
+    } else if (currentRole === 'student' && currentMode === 'register') {
+        modalTitle.textContent = 'Student Registration'
+        modalSubtitle.textContent = 'Enter your details & parent contact'
+        studentRegisterForm.classList.remove('hidden')
+        modalToggleText.innerHTML = `Already have an account? <button type="button" id="toggle-mode-btn">Sign in here</button>`
+    } else if (currentRole === 'teacher') {
+        modalTitle.textContent = 'Teacher Sign In'
+        modalSubtitle.textContent = 'Enter your faculty credentials'
+        teacherLoginForm.classList.remove('hidden')
+        modalToggleText.innerHTML = ''
+    }
+
+    const toggleBtn = document.getElementById('toggle-mode-btn')
+    if (toggleBtn) toggleBtn.addEventListener('click', toggleMode)
 }
 
 
-const teacherEmailInput = teacherLoginForm.querySelector('input[type="email"]')
-const teacherPasswordInput = teacherLoginForm.querySelector('input[type="password"]')
-const teacherLoginErrorElements = {
-    email: document.getElementById('t-login-email-err'),
-    password: document.getElementById('t-log-password-err'),
-}
-
-
-function showPanel(panel) {
-    options.style.display = 'none'
-    studentLoginForm.style.display = 'none'
-    teacherLoginForm.style.display = 'none'
-    registerForm.style.display = 'none'
-    panel.style.display = panel === options ? 'flex' : 'flex'
-}
-
-document.querySelector('.student-login').addEventListener('click', () => showPanel(studentLoginForm))
-document.querySelector('.teacher-login').addEventListener('click', () => showPanel(teacherLoginForm))
-document.querySelector('#register-account a').addEventListener('click', () => showPanel(registerForm))
-
-document.querySelectorAll('.back-btn').forEach(btn => {
-    btn.addEventListener('click', () => showPanel(options))
-})
-
+document.getElementById('hero-student').addEventListener('click', () => openModal('student'))
+document.getElementById('hero-teacher').addEventListener('click', () => openModal('teacher'))
+document.getElementById('close-modal').addEventListener('click', closeModal)
 
 function clearErrors(errorElements) {
     Object.values(errorElements).forEach(el => {
@@ -65,18 +94,14 @@ function clearErrors(errorElements) {
     })
 }
 
-
 function displayFirstError(errors, errorElements) {
     if (!errors || errors.length === 0) return
     const firstError = errors[0]
     const targetEl = errorElements[firstError.path]
-    if (targetEl) {
-        targetEl.textContent = firstError.msg
-    }
+    if (targetEl) targetEl.textContent = firstError.msg
 }
 
-
-registerForm.addEventListener('submit', async (e) => {
+studentRegisterForm.addEventListener('submit', async (e) => {
     e.preventDefault()
     clearErrors(registerErrorElements)
 
@@ -105,13 +130,13 @@ registerForm.addEventListener('submit', async (e) => {
 
         if (data.success) {
             alert('Registration successful! You can now log in.')
-            window.location.href = '/'
+            currentMode = 'login'
+            updateModalUI()
         }
     } catch (err) {
         console.error(err)
     }
 })
-
 
 studentLoginForm.addEventListener('submit', async (e) => {
     e.preventDefault()
@@ -122,8 +147,8 @@ studentLoginForm.addEventListener('submit', async (e) => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                email: studentEmailInput.value,
-                password: studentPasswordInput.value,
+                email: studEmailInput.value,
+                password: studPasswordInput.value,
             }),
         })
 
@@ -144,7 +169,7 @@ studentLoginForm.addEventListener('submit', async (e) => {
     }
 })
 
-
+// ---- Teacher Login ----
 teacherLoginForm.addEventListener('submit', async (e) => {
     e.preventDefault()
     clearErrors(teacherLoginErrorElements)

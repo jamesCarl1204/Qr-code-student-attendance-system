@@ -4,25 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Portal</title>
-    <link rel="stylesheet" href="/studentPortal/student-dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/studentPortal/styles.css">
 </head>
 <body>
 
     <nav class="navbar">
         <div class="navbar-brand">
-            <div class="logo-circle"><i class="fa-solid fa-qrcode"></i></div>
-            <span class="brand-text">Regis Marie College</span>
+            <div class="avatar" id="student-initials">SP</div>
+            <div>
+                <h1 class="user-name" id="student-name">Student Name</h1>
+                <p class="user-id" id="student-id">Student ID: --------</p>
+            </div>
         </div>
 
         <div class="navbar-actions">
-            <button class="btn btn-outline" id="join-class-btn">
-                <i class="fa-solid fa-plus"></i>
-                Join Class
+            <button class="btn btn-primary" id="join-class-btn">
+                <i class="fa-solid fa-plus"></i> Join Class
             </button>
-            <button class="btn btn-danger" id="logout-btn">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Logout
+            <button class="btn btn-ghost" id="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
             </button>
         </div>
     </nav>
@@ -32,75 +36,122 @@
         <aside class="sidebar">
             <ul class="sidebar-menu">
                 <li class="sidebar-item active" data-target="classes">
-                    <i class="fa-solid fa-chalkboard"></i>
+                    <i class="fa-solid fa-book-open"></i>
                     <span>Classes</span>
                 </li>
                 <li class="sidebar-item" data-target="archived">
                     <i class="fa-solid fa-box-archive"></i>
-                    <span>Archived Classes</span>
+                    <span>Archived Class</span>
                 </li>
                 <li class="sidebar-item" data-target="scan">
                     <i class="fa-solid fa-qrcode"></i>
                     <span>Scan</span>
                 </li>
             </ul>
+
+            <div class="sidebar-status">
+                <p class="sidebar-status-title">Attendance Ready</p>
+                <p class="sidebar-status-text">No active attendance tokens detected.</p>
+            </div>
         </aside>
 
         <main class="main-content">
 
             <section class="view" id="view-classes">
                 <div class="view-header">
-                    <h1>My Classes</h1>
-                    <p class="view-subtitle">Classes you're currently enrolled in</p>
+                    <div>
+                        <h2>Classes</h2>
+                        <p class="view-subtitle">Enrolled courses and attendance logs.</p>
+                    </div>
                 </div>
 
                 <div class="class-grid" id="classes-grid">
                     <div class="empty-state">
-                        <i class="fa-solid fa-chalkboard"></i>
-                        <p>You haven't joined any classes yet.</p>
-                        <button class="btn btn-outline">
-                            <i class="fa-solid fa-plus"></i>
-                            Join your first class
-                        </button>
+                        <div class="empty-icon"><i class="fa-solid fa-book-open"></i></div>
+                        <div>
+                            <h3>No classes enrolled yet</h3>
+                            <p>You are not currently enrolled in any classes. Use "Join Class" above to get started.</p>
+                        </div>
+                        <button class="btn btn-primary" id="empty-join-btn">Join a Class Now</button>
                     </div>
                 </div>
             </section>
 
-
             <section class="view" id="view-archived" style="display:none">
                 <div class="view-header">
-                    <h1>Archived Classes</h1>
-                    <p class="view-subtitle">Classes no longer active</p>
+                    <div>
+                        <h2>Archived Class</h2>
+                        <p class="view-subtitle">Previous semester or completed courses.</p>
+                    </div>
                 </div>
 
                 <div class="class-grid" id="archived-grid">
                     <div class="empty-state">
-                        <i class="fa-solid fa-box-archive"></i>
-                        <p>No archived classes.</p>
+                        <div class="empty-icon"><i class="fa-solid fa-box-archive"></i></div>
+                        <div>
+                            <h3>No archived classes</h3>
+                            <p>Archived courses from past terms will appear here.</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-
-            <section class="view" id="view-scan" style="display:none">
+            <section class="view view-narrow" id="view-scan" style="display:none">
                 <div class="view-header">
-                    <h1>Scan Attendance</h1>
-                    <p class="view-subtitle">Scan your class QR code to mark attendance</p>
+                    <div>
+                        <h2>QR Scanner</h2>
+                        <p class="view-subtitle">Scan event or class check-in codes.</p>
+                    </div>
                 </div>
 
-                <div class="scan-box">
-                    <i class="fa-solid fa-qrcode"></i>
-                    <p>Camera preview will appear here</p>
-                    <button class="btn btn-primary">
-                        <i class="fa-solid fa-camera"></i>
-                        Start Scanning
-                    </button>
+                <div class="scan-card">
+                   <div class="camera-box">
+                         <div id="reader"></div>
+                   </div>
+                        <button class="btn btn-primary" id="start-scan-btn">
+                     <i class="fa-solid fa-camera"></i> Start Scanning
+                        </button>
+                    </div>
+
+                    <div class="manual-checkin">
+                        <label for="scan-code-input">Manual Code Check-in</label>
+                        <div class="manual-row">
+                            <input type="text" id="scan-code-input" class="input input-mono" placeholder="Enter session or check-in code...">
+                            <button class="btn btn-primary" id="manual-checkin-btn">Submit</button>
+                        </div>
+                    </div>
                 </div>
             </section>
 
         </main>
     </div>
 
-    <script src="/studentPortal/student-dashboard.js"></script>
+    <div class="modal-overlay" id="join-modal">
+        <div class="modal-card">
+            <div class="modal-head">
+                <div class="modal-title-wrap">
+                    <div class="avatar avatar-sm">JC</div>
+                    <div>
+                        <h3>Join a Class</h3>
+                        <p>Enter class code provided by instructor</p>
+                    </div>
+                </div>
+                <button class="icon-btn" id="join-close-btn" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="join-form">
+                <label for="class-code-input">Class Code</label>
+                <input type="text" id="class-code-input" class="input input-mono input-upper" placeholder="e.g. CS-301-2026" required>
+                <button type="submit" class="btn btn-primary btn-block">Join Class</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="/studentPortal/script.js"></script>
 </body>
 </html>

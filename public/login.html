@@ -3,131 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Regis Marie College - QR Attendance System</title>
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-    <div class="container">
-        <div class="login-container">
+    <div class="app">
 
-            <div class="login-desc">
-                <div class="login-desc-content">
-                    <div class="logo-circle"><i class="fa-solid fa-qrcode"></i></div>
-                    <h3>Regis Marie College</h3>
-                    <h2>Qr code-based Student Attendance System</h2>
-                    <p class="tagline">Fast, accurate, and paperless attendance</p>
+        <header class="topnav">
+            <div class="brand">
+                <div class="logo-box">QR</div>
+                <div class="brand-text">
+                    <h1>Regis Marie College</h1>
+                    <p>QR Attendance Monitoring</p>
                 </div>
             </div>
 
-            <div class="login-options">
-                <div class="student-login" data-target="1">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                    <h2>Student Login</h2>
-                </div>
+        </header>
 
-                <div class="teacher-login" data-target="2">
-                    <i class="fa-solid fa-chalkboard-user"></i>
-                    <h2>Teacher Login</h2>
-                </div>
-
-                <div id="register-account"><a>New student? Register here</a></div>
+        <main class="landing">
+            <div class="hero-copy">
+                <h2>Fast, Accurate QR-Based Attendance.</h2>
+                <p>Scan in seconds, keep parents informed automatically, and give teachers real-time attendance visibility.</p>
             </div>
 
-            <form class="student-login-form">
-                <h3>Student Login</h3>
+            <div class="hero-options">
+                <button class="hero-card" id="hero-student">
+                    <div class="hero-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <div class="hero-text">
+                        <h3>Student Access</h3>
+                        <p>View your digital QR pass and attendance records.</p>
+                    </div>
+                </button>
 
+                <button class="hero-card" id="hero-teacher">
+                    <div class="hero-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                    <div class="hero-text">
+                        <h3>Teacher Portal</h3>
+                        <p>Run live QR scanning and manage class rosters.</p>
+                    </div>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <div id="auth-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+
+            <div class="modal-header">
+                <div class="brand">
+                    <div class="logo-box">QR</div>
+                    <div class="brand-text">
+                        <h3 id="modal-title">Student Sign In</h3>
+                        <p id="modal-subtitle">Enter your student credentials</p>
+                    </div>
+                </div>
+                <button type="button" id="close-modal" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="student-login-form" class="modal-form">
                 <label>Email</label>
-                <div class="input-wrap">
-                    <i class="fa-solid fa-envelope"></i>
-                    <input type="email" placeholder="Enter email...">
-                </div>
+                <input type="email" id="stud-email" placeholder="Enter email..." required>
                 <div id="stud-email-err" class="err"></div>
 
                 <label>Password</label>
-                <div class="input-wrap">
-                    <i class="fa-solid fa-lock"></i>
-                    <input type="password" placeholder="Enter password...">
-                </div>
+                <input type="password" id="stud-password" placeholder="Enter password..." required>
                 <div id="stud-password-err" class="err"></div>
 
-                <button id="-student-login-btn">Login</button>
-                <button type="button" class="back-btn" data-target="options">&larr; back</button>
+                <button type="submit" id="student-login-btn">Sign In</button>
             </form>
 
-            <form class="teacher-login-form">
-                <h3>Teacher Login</h3>
-
+            <form id="teacher-login-form" class="modal-form hidden">
                 <label>Email</label>
-                <div class="input-wrap">
-                    <i class="fa-solid fa-envelope"></i>
-                    <input type="email" placeholder="Enter email...">
-                </div>
+                <input type="email" id="t-login-email" placeholder="Enter email..." required>
                 <div id="t-login-email-err" class="err"></div>
 
                 <label>Password</label>
-                <div class="input-wrap">
-                    <i class="fa-solid fa-lock"></i>
-                    <input type="password" placeholder="Enter password...">
-                </div>
+                <input type="password" id="t-login-password" placeholder="Enter password..." required>
                 <div id="t-log-password-err" class="err"></div>
 
-                <button id="teacher-login-btn">Login</button>
-                <button type="button" class="back-btn" data-target="options">&larr; back</button>
+                <button type="submit" id="teacher-login-btn">Sign In</button>
             </form>
 
-            <form class="student-register">
-                <h3>Register</h3>
-
-                <div class="input-wrap">
-                    <i class="fa-solid fa-user"></i>
-                    <input id="name-input" placeholder="Enter name..." required>
+            <form id="student-register-form" class="modal-form hidden">
+                <div class="grid-2">
+                    <div>
+                        <label>Student ID</label>
+                        <input id="student-id" placeholder="Enter student ID..." required>
+                        <div id="id-err" class="err"></div>
+                    </div>
+                    <div>
+                        <label>First Name</label>
+                        <input id="name-input" placeholder="Enter name..." required>
+                    </div>
                 </div>
 
-                <div class="input-wrap">
-                    <i class="fa-solid fa-user"></i>
-                    <input id="middlename-input" placeholder="Middlename (optional)">
+                <div class="grid-2">
+                    <div>
+                        <label>Middle Name</label>
+                        <input id="middlename-input" placeholder="Optional">
+                    </div>
+                    <div>
+                        <label>Last Name</label>
+                        <input id="lastname-input" placeholder="Enter lastname..." required>
+                    </div>
                 </div>
 
-                <div class="input-wrap">
-                    <i class="fa-solid fa-user"></i>
-                    <input id="lastname-input" placeholder="Enter lastname..." required>
-                </div>
-
-                <div class="input-wrap">
-                    <i class="fa-solid fa-id-card"></i>
-                    <input id="student-id" placeholder="Enter student ID..." required>
-                </div>
-                <div id="id-err" class="err"></div>
-
-                <div class="input-wrap">
-                    <i class="fa-solid fa-envelope"></i>
-                    <input id="email-input" type="email" placeholder="Enter email..." required>
-                </div>
+                <label>Student Email</label>
+                <input id="email-input" type="email" placeholder="Enter email..." required>
                 <div id="email-err" class="err"></div>
 
-                <div class="input-wrap">
-                    <i class="fa-solid fa-lock"></i>
-                    <input id="password-input" type="password" placeholder="Enter password..." required>
-                </div>
+                <label>Password</label>
+                <input id="password-input" type="password" placeholder="Enter password..." required>
                 <div id="password-err" class="err"></div>
 
-                <div class="input-wrap">
-                    <i class="fa-solid fa-lock"></i>
-                    <input id="password-confirm" type="password" placeholder="Confirm password..." required>
-                </div>
+                <label>Confirm Password</label>
+                <input id="password-confirm" type="password" placeholder="Confirm password..." required>
                 <div id="confirm-err" class="err"></div>
 
-                <div class="input-wrap">
-                    <i class="fa-solid fa-envelope"></i>
-                    <input id="parent-email" type="email" placeholder="Parent/guardian email..." required>
-                </div>
+                <label>Parent's Email</label>
+                <input id="parent-email" type="email" placeholder="Parent/guardian email..." required>
                 <div id="parent-email-err" class="err"></div>
 
-                <button id="register-btn">Register Account</button>
-                <button type="button" class="back-btn" data-target="options">&larr; back</button>
+                <button type="submit" id="register-btn">Create Student Account</button>
             </form>
+
+            <div class="modal-footer">
+                <p id="modal-toggle-text">New student? <button type="button" id="toggle-mode-btn">Register here</button></p>
+            </div>
 
         </div>
     </div>
@@ -135,4 +139,3 @@
     <script src="login.js"></script>
 </body>
 </html>
-
