@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Portal - QR Attendance & AI Assistant</title>
+    <link rel="stylesheet" href="teacher.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <div id="app" class="app">
+
+        <header class="topbar">
+            <div class="brand">
+                <div class="logo-box">TP</div>
+                <div class="brand-text">
+                    <h1>Teacher Portal</h1>
+                    <p>QR Attendance &amp; AI Assistant</p>
+                </div>
+            </div>
+
+            <div class="topbar-actions">
+                <button id="open-create-class" class="btn btn-dark">
+                    <i class="fa-solid fa-plus"></i> Create Class
+                </button>
+                <button id="logout-btn" class="btn btn-ghost">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <div class="layout">
+
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <button class="sidebar-btn active" id="nav-classes" data-target="classes">
+                        <i class="fa-solid fa-book-open"></i> Classes
+                    </button>
+                    <button class="sidebar-btn" id="nav-archived" data-target="archived">
+                        <i class="fa-solid fa-box-archive"></i> Archived Class
+                    </button>
+                    <button class="sidebar-btn" id="nav-ai-chat" data-target="ai-chat">
+                        <i class="fa-solid fa-robot"></i> AI Assistant Chatbot
+                    </button>
+                </nav>
+
+                <div class="sidebar-status">
+                    <div class="sidebar-status-title">Assistant Active</div>
+                    <p>Ready to help with attendance questions.</p>
+                </div>
+            </aside>
+
+            <main class="content">
+
+                <section id="view-classes" class="view">
+                    <div class="view-header">
+                        <div>
+                            <h2>Classes</h2>
+                            <p>Active courses and attendance monitoring sessions.</p>
+                        </div>
+                    </div>
+
+                    <div class="empty-state">
+                        <div class="empty-icon"><i class="fa-solid fa-book-open"></i></div>
+                        <div class="empty-copy">
+                            <h3>No classes created yet</h3>
+                            <p>You haven't set up any active classes. Use "Create Class" above to start generating QR attendance sessions.</p>
+                        </div>
+                        <button id="empty-create-class" class="btn btn-dark">Create a Class Now</button>
+                    </div>
+                </section>
+
+                <section id="view-archived" class="view hidden">
+                    <div class="view-header">
+                        <div>
+                            <h2>Archived Class</h2>
+                            <p>Previous semester or completed courses.</p>
+                        </div>
+                    </div>
+
+                    <div class="empty-state">
+                        <div class="empty-icon"><i class="fa-solid fa-box-archive"></i></div>
+                        <div class="empty-copy">
+                            <h3>No archived classes</h3>
+                            <p>Archived courses from previous terms will appear here.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="view-ai-chat" class="view view-chat hidden">
+                    <div class="view-header">
+                        <div>
+                            <h2>AI Assistant Chatbot</h2>
+                            <p>Ask for help with attendance monitoring and class records.</p>
+                        </div>
+                        <button id="clear-chat-btn" class="btn btn-outline">
+                            <i class="fa-solid fa-rotate-left"></i> Clear Chat
+                        </button>
+                    </div>
+
+                    <div id="chat-messages" class="chat-messages">
+                        <div class="chat-row">
+                            <div class="chat-avatar ai">AI</div>
+                            <div class="chat-bubble ai">
+                                <p>Hello Teacher! I'm your attendance assistant. Ask me about a student's check-in history, today's class attendance, or who's marked late or absent.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="chat-form" class="chat-form">
+                        <input type="text" id="chat-input" placeholder="Ask about attendance for your class...">
+                        <button type="submit" id="chat-submit-btn"><span>Send</span> <i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <div id="create-class-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-head">
+                <div class="modal-title-wrap">
+                    <div class="logo-box sm">CC</div>
+                    <div class="brand-text">
+                        <h3>Create New Class</h3>
+                        <p>Set up course details for QR attendance</p>
+                    </div>
+                </div>
+                <button id="close-create-class" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="create-class-form">
+                <label>Class Name</label>
+                <input type="text" id="class-name-input" placeholder="e.g. Advanced Data Structures" required>
+
+                <div class="grid-2">
+                    <div>
+                        <label>Subject Code</label>
+                        <input type="text" id="class-code-input" class="mono upper" placeholder="e.g. CS-302" required>
+                    </div>
+                    <div>
+                        <label>Section / Room</label>
+                        <input type="text" id="class-section-input" placeholder="e.g. Room 402" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-dark btn-block">Create Class Session</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script src="teacher.js"></script>
+</body>
+</html>

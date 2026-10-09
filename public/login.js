@@ -7,8 +7,8 @@ const studentLoginForm = document.getElementById('student-login-form')
 const teacherLoginForm = document.getElementById('teacher-login-form')
 const studentRegisterForm = document.getElementById('student-register-form')
 
-let currentRole = 'student'   // 'student' | 'teacher'
-let currentMode = 'login'     // 'login' | 'register'
+let currentRole = 'student'   
+let currentMode = 'login'
 
 const studEmailInput = document.getElementById('stud-email')
 const studPasswordInput = document.getElementById('stud-password')
@@ -169,7 +169,7 @@ studentLoginForm.addEventListener('submit', async (e) => {
     }
 })
 
-// ---- Teacher Login ----
+
 teacherLoginForm.addEventListener('submit', async (e) => {
     e.preventDefault()
     clearErrors(teacherLoginErrorElements)
