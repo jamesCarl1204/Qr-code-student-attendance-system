@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const rateLimit = require('express-rate-limit');
 const { body, validationResult } = require('express-validator');
-const [findByEmail, createStudent ] = require('../model/studentModel');
+const [findByEmail, createStudent ] = require('../../public/model/studentModel');
 
 const MAX_AGE_SECONDS = 30 * 24 * 60 * 60;
 const SALT_ROUNDS = 12; // 
