@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Html5Qrcode } from 'html5-qrcode'
 import useStyle from '../hooks/useStyle'
 import useToast from '../components/Toasts'
-import css from '../styles/student.css?inline'
+import css from '../styles/student.module.css?inline'
 
 export default function StudentPortal() {
   useStyle(css)

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import useStyle from '../hooks/useStyle'
-import css from '../styles/landing.module.css?inline'
+import s from '../styles/Landing.module.css'
 
 const emptyReg = {
   name: '',
@@ -29,7 +28,6 @@ function firstError(errors) {
 }
 
 export default function Landing() {
- // useStyle(css)
   const navigate = useNavigate()
 
   const [open, setOpen] = useState(false)
@@ -114,21 +112,24 @@ export default function Landing() {
     subtitle = 'Enter your faculty credentials'
   }
 
+  const formClass = (visible) =>
+    `${s['modal-form']}${visible ? '' : ' ' + s.hidden}`
+
   return (
-    <>
-      <div className="app">
-        <header className="topnav">
-          <div className="brand">
-            <div className="logo-box">QR</div>
-            <div className="brand-text">
+    <div className={s.root}>
+      <div className={s.app}>
+        <header className={s.topnav}>
+          <div className={s.brand}>
+            <div className={s['logo-box']}>QR</div>
+            <div className={s['brand-text']}>
               <h1>Regis Marie College</h1>
               <p>QR Attendance Monitoring</p>
             </div>
           </div>
         </header>
 
-        <main className="landing">
-          <div className="hero-copy">
+        <main className={s.landing}>
+          <div className={s['hero-copy']}>
             <h2>Fast, Accurate QR-Based Attendance.</h2>
             <p>
               Scan in seconds, keep parents informed automatically, and give teachers real-time
@@ -136,22 +137,22 @@ export default function Landing() {
             </p>
           </div>
 
-          <div className="hero-options">
-            <button className="hero-card" onClick={() => openModal('student')}>
-              <div className="hero-icon">
+          <div className={s['hero-options']}>
+            <button className={s['hero-card']} onClick={() => openModal('student')}>
+              <div className={s['hero-icon']}>
                 <i className="fa-solid fa-graduation-cap"></i>
               </div>
-              <div className="hero-text">
+              <div className={s['hero-text']}>
                 <h3>Student Access</h3>
                 <p>View your digital QR pass and attendance records.</p>
               </div>
             </button>
 
-            <button className="hero-card" onClick={() => openModal('teacher')}>
-              <div className="hero-icon">
+            <button className={s['hero-card']} onClick={() => openModal('teacher')}>
+              <div className={s['hero-icon']}>
                 <i className="fa-solid fa-chalkboard-user"></i>
               </div>
-              <div className="hero-text">
+              <div className={s['hero-text']}>
                 <h3>Teacher Portal</h3>
                 <p>Run live QR scanning and manage class rosters.</p>
               </div>
@@ -160,24 +161,24 @@ export default function Landing() {
         </main>
       </div>
 
-      <div className={`modal-overlay${open ? '' : ' hidden'}`}>
-        <div className="modal-card">
-          <div className="modal-header">
-            <div className="brand">
-              <div className="logo-box">QR</div>
-              <div className="brand-text">
+      <div className={`${s['modal-overlay']}${open ? '' : ' ' + s.hidden}`}>
+        <div className={s['modal-card']}>
+          <div className={s['modal-header']}>
+            <div className={s.brand}>
+              <div className={s['logo-box']}>QR</div>
+              <div className={s['brand-text']}>
                 <h3>{title}</h3>
                 <p>{subtitle}</p>
               </div>
             </div>
-            <button type="button" className="icon-btn" onClick={() => setOpen(false)}>
+            <button type="button" className={s['icon-btn']} onClick={() => setOpen(false)}>
               <i className="fa-solid fa-xmark"></i>
             </button>
           </div>
 
           {/* STUDENT LOGIN */}
           <form
-            className={`modal-form${role === 'student' && mode === 'login' ? '' : ' hidden'}`}
+            className={formClass(role === 'student' && mode === 'login')}
             onSubmit={submitStudentLogin}
           >
             <label>Email</label>
@@ -188,7 +189,7 @@ export default function Landing() {
               value={studLogin.email}
               onChange={(e) => setStudLogin((p) => ({ ...p, email: e.target.value }))}
             />
-            <div className="err">{studLoginErr.email}</div>
+            <div className={s.err}>{studLoginErr.email}</div>
 
             <label>Password</label>
             <input
@@ -198,16 +199,13 @@ export default function Landing() {
               value={studLogin.password}
               onChange={(e) => setStudLogin((p) => ({ ...p, password: e.target.value }))}
             />
-            <div className="err">{studLoginErr.password}</div>
+            <div className={s.err}>{studLoginErr.password}</div>
 
             <button type="submit">Sign In</button>
           </form>
 
           {/* TEACHER LOGIN */}
-          <form
-            className={`modal-form${role === 'teacher' ? '' : ' hidden'}`}
-            onSubmit={submitTeacherLogin}
-          >
+          <form className={formClass(role === 'teacher')} onSubmit={submitTeacherLogin}>
             <label>Email</label>
             <input
               type="email"
@@ -216,7 +214,7 @@ export default function Landing() {
               value={teachLogin.email}
               onChange={(e) => setTeachLogin((p) => ({ ...p, email: e.target.value }))}
             />
-            <div className="err">{teachLoginErr.email}</div>
+            <div className={s.err}>{teachLoginErr.email}</div>
 
             <label>Password</label>
             <input
@@ -226,17 +224,17 @@ export default function Landing() {
               value={teachLogin.password}
               onChange={(e) => setTeachLogin((p) => ({ ...p, password: e.target.value }))}
             />
-            <div className="err">{teachLoginErr.password}</div>
+            <div className={s.err}>{teachLoginErr.password}</div>
 
             <button type="submit">Sign In</button>
           </form>
 
           {/* STUDENT REGISTER */}
           <form
-            className={`modal-form${role === 'student' && mode === 'register' ? '' : ' hidden'}`}
+            className={formClass(role === 'student' && mode === 'register')}
             onSubmit={submitRegister}
           >
-            <div className="grid-2">
+            <div className={s['grid-2']}>
               <div>
                 <label>Student ID</label>
                 <input
@@ -245,7 +243,7 @@ export default function Landing() {
                   value={reg.studentId}
                   onChange={onReg('studentId')}
                 />
-                <div className="err">{regErr.studentId}</div>
+                <div className={s.err}>{regErr.studentId}</div>
               </div>
               <div>
                 <label>First Name</label>
@@ -258,7 +256,7 @@ export default function Landing() {
               </div>
             </div>
 
-            <div className="grid-2">
+            <div className={s['grid-2']}>
               <div>
                 <label>Middle Name</label>
                 <input
@@ -286,7 +284,7 @@ export default function Landing() {
               value={reg.email}
               onChange={onReg('email')}
             />
-            <div className="err">{regErr.email}</div>
+            <div className={s.err}>{regErr.email}</div>
 
             <label>Password</label>
             <input
@@ -296,7 +294,7 @@ export default function Landing() {
               value={reg.password}
               onChange={onReg('password')}
             />
-            <div className="err">{regErr.password}</div>
+            <div className={s.err}>{regErr.password}</div>
 
             <label>Confirm Password</label>
             <input
@@ -306,7 +304,7 @@ export default function Landing() {
               value={reg.confirmPassword}
               onChange={onReg('confirmPassword')}
             />
-            <div className="err">{regErr.confirmPassword}</div>
+            <div className={s.err}>{regErr.confirmPassword}</div>
 
             <label>Parent's Email</label>
             <input
@@ -316,12 +314,12 @@ export default function Landing() {
               value={reg.parentEmail}
               onChange={onReg('parentEmail')}
             />
-            <div className="err">{regErr.parentEmail}</div>
+            <div className={s.err}>{regErr.parentEmail}</div>
 
             <button type="submit">Create Student Account</button>
           </form>
 
-          <div className="modal-footer">
+          <div className={s['modal-footer']}>
             {role === 'student' && mode === 'login' && (
               <p>
                 New student?{' '}
@@ -341,6 +339,6 @@ export default function Landing() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }

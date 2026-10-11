@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useStyle from '../hooks/useStyle'
 import useToast from '../components/Toasts'
-import css from '../styles/teacher.css?inline'
+import css from '../styles/teacher.module.css'
 
 const WELCOME =
   "Hello Teacher! I'm your attendance assistant. Ask me about a student's check-in history, today's class attendance, or who's marked late or absent."
