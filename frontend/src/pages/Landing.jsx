@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import s from '../styles/Landing.module.css'
+import logo from './100.png'
 
 const emptyReg = {
   name: '',
@@ -112,60 +113,86 @@ export default function Landing() {
     subtitle = 'Enter your faculty credentials'
   }
 
-  const formClass = (visible) =>
-    `${s['modal-form']}${visible ? '' : ' ' + s.hidden}`
+  const formClass = (visible) => `${s['modal-form']}${visible ? '' : ' ' + s.hidden}`
 
   return (
     <div className={s.root}>
-      <div className={s.app}>
-        <header className={s.topnav}>
+      <header className={s.topnav}>
+        <div className={s.inner}>
           <div className={s.brand}>
-            <div className={s['logo-box']}>QR</div>
+            <div className={s['logo-box']}>
+               <img className={s.img} src={logo}/>       
+     </div>
             <div className={s['brand-text']}>
-              <h1>Regis Marie College</h1>
+              <h1>
+                Regis Marie <span className={s.badge}>COLLEGE</span>
+              </h1>
               <p>QR Attendance Monitoring</p>
             </div>
           </div>
-        </header>
 
-        <main className={s.landing}>
-          <div className={s['hero-copy']}>
-            <h2>Fast, Accurate QR-Based Attendance.</h2>
-            <p>
-              Scan in seconds, keep parents informed automatically, and give teachers real-time
-              attendance visibility.
+        
+        </div>
+      </header>
+
+      <main className={s.landing}>
+        
+
+        <div className={s['hero-copy']}>
+          <h2>
+            Fast, Accurate <span className={s.accent}>QR-Based</span> Attendance.
+          </h2>
+          <p>
+            Scan in seconds, keep parents informed automatically, and give teachers real-time
+            class attendance visibility.
+          </p>
+        </div>
+
+        <div className={s.cards}>
+          <button className={s.card} onClick={() => openModal('student')}>
+            <div className={`${s['card-icon']} ${s['icon-student']}`}>
+              <i className="fa-solid fa-graduation-cap"></i>
+            </div>
+            <div className={s['card-title']}>
+              <h3>Student Access</h3>
+              <i className="fa-solid fa-arrow-right"></i>
+            </div>
+            <p className={s['card-desc']}>
+              View your digital QR pass, real-time subject logs, and personal attendance history.
             </p>
-          </div>
+            <div className={`${s['card-footer']} ${s['footer-student']}`}>
+              <span>Student Portal</span>
+              <i className="fa-solid fa-qrcode"></i>
+            </div>
+          </button>
 
-          <div className={s['hero-options']}>
-            <button className={s['hero-card']} onClick={() => openModal('student')}>
-              <div className={s['hero-icon']}>
-                <i className="fa-solid fa-graduation-cap"></i>
-              </div>
-              <div className={s['hero-text']}>
-                <h3>Student Access</h3>
-                <p>View your digital QR pass and attendance records.</p>
-              </div>
-            </button>
-
-            <button className={s['hero-card']} onClick={() => openModal('teacher')}>
-              <div className={s['hero-icon']}>
-                <i className="fa-solid fa-chalkboard-user"></i>
-              </div>
-              <div className={s['hero-text']}>
-                <h3>Teacher Portal</h3>
-                <p>Run live QR scanning and manage class rosters.</p>
-              </div>
-            </button>
-          </div>
-        </main>
-      </div>
+          <button className={`${s.card} ${s['card-teacher']}`} onClick={() => openModal('teacher')}>
+            <div className={`${s['card-icon']} ${s['icon-teacher']}`}>
+              <i className="fa-solid fa-chalkboard-user"></i>
+            </div>
+            <div className={s['card-title']}>
+              <h3>Teacher Portal</h3>
+              <i className="fa-solid fa-arrow-right"></i>
+            </div>
+            <p className={s['card-desc']}>
+              Run live classroom QR scanning, manage class rosters, and generate attendance
+              reports.
+            </p>
+            <div className={`${s['card-footer']} ${s['footer-teacher']}`}>
+              <span>Live Classroom</span>
+              <i className="fa-solid fa-camera"></i>
+            </div>
+          </button>
+        </div>
+      </main>
 
       <div className={`${s['modal-overlay']}${open ? '' : ' ' + s.hidden}`}>
         <div className={s['modal-card']}>
           <div className={s['modal-header']}>
             <div className={s.brand}>
-              <div className={s['logo-box']}>QR</div>
+              <div className={s['logo-box']}>
+                <i className="fa-solid fa-qrcode"></i>
+              </div>
               <div className={s['brand-text']}>
                 <h3>{title}</h3>
                 <p>{subtitle}</p>

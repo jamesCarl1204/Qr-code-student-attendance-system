@@ -1,15 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import useStyle from '../hooks/useStyle'
 import useToast from '../components/Toasts'
-import css from '../styles/teacher.module.css'
+import s from '../styles/teacher.module.css'
 
 const WELCOME =
   "Hello Teacher! I'm your attendance assistant. Ask me about a student's check-in history, today's class attendance, or who's marked late or absent."
 const CLEARED = 'Chat history cleared. How else can I assist your teaching workflow today?'
 
 export default function TeacherPortal() {
-  useStyle(css)
   const navigate = useNavigate()
   const { showToast, toastContainer } = useToast()
 
@@ -77,37 +75,37 @@ export default function TeacherPortal() {
     { key: 'ai-chat', icon: 'fa-robot', label: 'AI Assistant Chatbot' },
   ]
 
-  const hide = (name) => (tab === name ? '' : ' hidden')
+  const hide = (name) => (tab === name ? '' : ` ${s.hidden}`)
 
   return (
-    <>
-      <div className="app">
-        <header className="topbar">
-          <div className="brand">
-            <div className="logo-box">TP</div>
-            <div className="brand-text">
+    <div className={s.root}>
+      <div className={s.app}>
+        <header className={s.topbar}>
+          <div className={s.brand}>
+            <div className={s['logo-box']}>TP</div>
+            <div className={s['brand-text']}>
               <h1>Teacher Portal</h1>
               <p>QR Attendance &amp; AI Assistant</p>
             </div>
           </div>
 
-          <div className="topbar-actions">
-            <button className="btn btn-dark" onClick={() => setModalOpen(true)}>
+          <div className={s['topbar-actions']}>
+            <button className={`${s.btn} ${s['btn-dark']}`} onClick={() => setModalOpen(true)}>
               <i className="fa-solid fa-plus"></i> Create Class
             </button>
-            <button className="btn btn-ghost" onClick={() => navigate('/')}>
+            <button className={`${s.btn} ${s['btn-ghost']}`} onClick={() => navigate('/')}>
               <i className="fa-solid fa-right-from-bracket"></i> Logout
             </button>
           </div>
         </header>
 
-        <div className="layout">
-          <aside className="sidebar">
-            <nav className="sidebar-nav">
+        <div className={s.layout}>
+          <aside className={s.sidebar}>
+            <nav className={s['sidebar-nav']}>
               {navItems.map((item) => (
                 <button
                   key={item.key}
-                  className={`sidebar-btn${tab === item.key ? ' active' : ''}`}
+                  className={`${s['sidebar-btn']} ${tab === item.key ? s.active : ''}`}
                   onClick={() => setTab(item.key)}
                 >
                   <i className={`fa-solid ${item.icon}`}></i> {item.label}
@@ -115,81 +113,81 @@ export default function TeacherPortal() {
               ))}
             </nav>
 
-            <div className="sidebar-status">
-              <div className="sidebar-status-title">Assistant Active</div>
+            <div className={s['sidebar-status']}>
+              <div className={s['sidebar-status-title']}>Assistant Active</div>
               <p>Ready to help with attendance questions.</p>
             </div>
           </aside>
 
-          <main className="content">
-            <section className={`view${hide('classes')}`}>
-              <div className="view-header">
+          <main className={s.content}>
+            <section className={`${s.view}${hide('classes')}`}>
+              <div className={s['view-header']}>
                 <div>
                   <h2>Classes</h2>
                   <p>Active courses and attendance monitoring sessions.</p>
                 </div>
               </div>
 
-              <div className="empty-state">
-                <div className="empty-icon">
+              <div className={s['empty-state']}>
+                <div className={s['empty-icon']}>
                   <i className="fa-solid fa-book-open"></i>
                 </div>
-                <div className="empty-copy">
+                <div className={s['empty-copy']}>
                   <h3>No classes created yet</h3>
                   <p>
                     You haven't set up any active classes. Use "Create Class" above to start
                     generating QR attendance sessions.
                   </p>
                 </div>
-                <button className="btn btn-dark" onClick={() => setModalOpen(true)}>
+                <button className={`${s.btn} ${s['btn-dark']}`} onClick={() => setModalOpen(true)}>
                   Create a Class Now
                 </button>
               </div>
             </section>
 
-            <section className={`view${hide('archived')}`}>
-              <div className="view-header">
+            <section className={`${s.view}${hide('archived')}`}>
+              <div className={s['view-header']}>
                 <div>
                   <h2>Archived Class</h2>
                   <p>Previous semester or completed courses.</p>
                 </div>
               </div>
 
-              <div className="empty-state">
-                <div className="empty-icon">
+              <div className={s['empty-state']}>
+                <div className={s['empty-icon']}>
                   <i className="fa-solid fa-box-archive"></i>
                 </div>
-                <div className="empty-copy">
+                <div className={s['empty-copy']}>
                   <h3>No archived classes</h3>
                   <p>Archived courses from previous terms will appear here.</p>
                 </div>
               </div>
             </section>
 
-            <section className={`view view-chat${hide('ai-chat')}`}>
-              <div className="view-header">
+            <section className={`${s.view} ${s['view-chat']}${hide('ai-chat')}`}>
+              <div className={s['view-header']}>
                 <div>
                   <h2>AI Assistant Chatbot</h2>
                   <p>Ask for help with attendance monitoring and class records.</p>
                 </div>
-                <button className="btn btn-outline" onClick={clearChat}>
+                <button className={`${s.btn} ${s['btn-outline']}`} onClick={clearChat}>
                   <i className="fa-solid fa-rotate-left"></i> Clear Chat
                 </button>
               </div>
 
-              <div className="chat-messages" ref={chatRef}>
+              <div className={s['chat-messages']} ref={chatRef}>
                 {messages.map((m, i) =>
                   m.role === 'user' ? (
-                    <div className="chat-row user" key={i}>
-                      <div className="chat-bubble user">
+                    <div className={`${s['chat-row']} ${s.user}`} key={i}>
+                      <div className={`${s['chat-bubble']} ${s.user}`}>
                         <p>{m.text}</p>
                       </div>
-                      <div className="chat-avatar user">YOU</div>
+                      <div className={`${s['chat-avatar']} ${s.user}`}>YOU</div>
                     </div>
                   ) : (
-                    <div className="chat-row" key={i}>
-                      <div className="chat-avatar ai">AI</div>
-                      <div className="chat-bubble ai">
+                    <div className={s['chat-row']} key={i}>
+                      <div className={`${s['chat-avatar']} ${s.ai}`}>AI</div>
+                      <div className={`${s['chat-bubble']} ${s.ai}`}>
                         <p style={{ whiteSpace: 'pre-wrap' }}>{m.text}</p>
                       </div>
                     </div>
@@ -197,18 +195,18 @@ export default function TeacherPortal() {
                 )}
 
                 {loading && (
-                  <div className="chat-row">
-                    <div className="chat-avatar ai">AI</div>
-                    <div className="chat-bubble ai loading">
-                      <span className="dot-bounce"></span>
-                      <span className="dot-bounce"></span>
-                      <span className="dot-bounce"></span>
+                  <div className={s['chat-row']}>
+                    <div className={`${s['chat-avatar']} ${s.ai}`}>AI</div>
+                    <div className={`${s['chat-bubble']} ${s.ai} ${s.loading}`}>
+                      <span className={s['dot-bounce']}></span>
+                      <span className={s['dot-bounce']}></span>
+                      <span className={s['dot-bounce']}></span>
                     </div>
                   </div>
                 )}
               </div>
 
-              <form className="chat-form" onSubmit={submitChat}>
+              <form className={s['chat-form']} onSubmit={submitChat}>
                 <input
                   type="text"
                   placeholder="Ask about attendance for your class..."
@@ -224,22 +222,22 @@ export default function TeacherPortal() {
         </div>
       </div>
 
-      <div className={`modal-overlay${modalOpen ? '' : ' hidden'}`}>
-        <div className="modal-card">
-          <div className="modal-head">
-            <div className="modal-title-wrap">
-              <div className="logo-box sm">CC</div>
-              <div className="brand-text">
+      <div className={`${s['modal-overlay']}${modalOpen ? '' : ` ${s.hidden}`}`}>
+        <div className={s['modal-card']}>
+          <div className={s['modal-head']}>
+            <div className={s['modal-title-wrap']}>
+              <div className={`${s['logo-box']} ${s.sm}`}>CC</div>
+              <div className={s['brand-text']}>
                 <h3>Create New Class</h3>
                 <p>Set up course details for QR attendance</p>
               </div>
             </div>
-            <button className="icon-btn" onClick={() => setModalOpen(false)}>
+            <button className={s['icon-btn']} onClick={() => setModalOpen(false)}>
               <i className="fa-solid fa-xmark"></i>
             </button>
           </div>
 
-          <form id="create-class-form" onSubmit={submitClass}>
+          <form className={s['create-class-form']} onSubmit={submitClass}>
             <label>Class Name</label>
             <input
               type="text"
@@ -249,12 +247,12 @@ export default function TeacherPortal() {
               onChange={(e) => setClassName(e.target.value)}
             />
 
-            <div className="grid-2">
+            <div className={s['grid-2']}>
               <div>
                 <label>Subject Code</label>
                 <input
                   type="text"
-                  className="mono upper"
+                  className={`${s.mono} ${s.upper}`}
                   placeholder="e.g. CS-302"
                   required
                   value={classCode}
@@ -273,7 +271,7 @@ export default function TeacherPortal() {
               </div>
             </div>
 
-            <button type="submit" className="btn btn-dark btn-block">
+            <button type="submit" className={`${s.btn} ${s['btn-dark']} ${s['btn-block']}`}>
               Create Class Session
             </button>
           </form>
@@ -281,6 +279,6 @@ export default function TeacherPortal() {
       </div>
 
       {toastContainer}
-    </>
+    </div>
   )
 }

@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Html5Qrcode } from 'html5-qrcode'
-import useStyle from '../hooks/useStyle'
 import useToast from '../components/Toasts'
-import css from '../styles/student.module.css?inline'
+import s from '../styles/student.module.css'
 
 export default function StudentPortal() {
-  useStyle(css)
   const navigate = useNavigate()
   const { showToast, toastContainer } = useToast()
 
@@ -18,10 +16,10 @@ export default function StudentPortal() {
   const scannerRef = useRef(null)
 
   const stopScanner = async () => {
-    const s = scannerRef.current
-    if (s && s.isScanning) {
+    const sc = scannerRef.current
+    if (sc && sc.isScanning) {
       try {
-        await s.stop()
+        await sc.stop()
       } catch (err) {
         console.error(err)
       }
@@ -82,33 +80,33 @@ export default function StudentPortal() {
   ]
 
   return (
-    <>
-      <nav className="navbar">
-        <div className="navbar-brand">
-          <div className="avatar">SP</div>
+    <div className={s.root}>
+      <nav className={s.navbar}>
+        <div className={s['navbar-brand']}>
+          <div className={s.avatar}>SP</div>
           <div>
-            <h1 className="user-name">Student Name</h1>
-            <p className="user-id">Student ID: --------</p>
+            <h1 className={s['user-name']}>Student Name</h1>
+            <p className={s['user-id']}>Student ID: --------</p>
           </div>
         </div>
 
-        <div className="navbar-actions">
-          <button className="btn btn-primary" onClick={openJoin}>
+        <div className={s['navbar-actions']}>
+          <button className={`${s.btn} ${s['btn-primary']}`} onClick={openJoin}>
             <i className="fa-solid fa-plus"></i> Join Class
           </button>
-          <button className="btn btn-ghost" onClick={() => navigate('/')}>
+          <button className={`${s.btn} ${s['btn-ghost']}`} onClick={() => navigate('/')}>
             <i className="fa-solid fa-right-from-bracket"></i> Logout
           </button>
         </div>
       </nav>
 
-      <div className="layout">
-        <aside className="sidebar">
-          <ul className="sidebar-menu">
+      <div className={s.layout}>
+        <aside className={s.sidebar}>
+          <ul className={s['sidebar-menu']}>
             {navItems.map((item) => (
               <li
                 key={item.key}
-                className={`sidebar-item${tab === item.key ? ' active' : ''}`}
+                className={`${s['sidebar-item']} ${tab === item.key ? s.active : ''}`}
                 onClick={() => setTab(item.key)}
               >
                 <i className={`fa-solid ${item.icon}`}></i>
@@ -117,24 +115,24 @@ export default function StudentPortal() {
             ))}
           </ul>
 
-          <div className="sidebar-status">
-            <p className="sidebar-status-title">Attendance Ready</p>
-            <p className="sidebar-status-text">No active attendance tokens detected.</p>
+          <div className={s['sidebar-status']}>
+            <p className={s['sidebar-status-title']}>Attendance Ready</p>
+            <p className={s['sidebar-status-text']}>No active attendance tokens detected.</p>
           </div>
         </aside>
 
-        <main className="main-content">
-          <section className="view" style={show('classes')}>
-            <div className="view-header">
+        <main className={s['main-content']}>
+          <section className={s.view} style={show('classes')}>
+            <div className={s['view-header']}>
               <div>
                 <h2>Classes</h2>
-                <p className="view-subtitle">Enrolled courses and attendance logs.</p>
+                <p className={s['view-subtitle']}>Enrolled courses and attendance logs.</p>
               </div>
             </div>
 
-            <div className="class-grid">
-              <div className="empty-state">
-                <div className="empty-icon">
+            <div className={s['class-grid']}>
+              <div className={s['empty-state']}>
+                <div className={s['empty-icon']}>
                   <i className="fa-solid fa-book-open"></i>
                 </div>
                 <div>
@@ -144,24 +142,24 @@ export default function StudentPortal() {
                     started.
                   </p>
                 </div>
-                <button className="btn btn-primary" onClick={openJoin}>
+                <button className={`${s.btn} ${s['btn-primary']}`} onClick={openJoin}>
                   Join a Class Now
                 </button>
               </div>
             </div>
           </section>
 
-          <section className="view" style={show('archived')}>
-            <div className="view-header">
+          <section className={s.view} style={show('archived')}>
+            <div className={s['view-header']}>
               <div>
                 <h2>Archived Class</h2>
-                <p className="view-subtitle">Previous semester or completed courses.</p>
+                <p className={s['view-subtitle']}>Previous semester or completed courses.</p>
               </div>
             </div>
 
-            <div className="class-grid">
-              <div className="empty-state">
-                <div className="empty-icon">
+            <div className={s['class-grid']}>
+              <div className={s['empty-state']}>
+                <div className={s['empty-icon']}>
                   <i className="fa-solid fa-box-archive"></i>
                 </div>
                 <div>
@@ -172,34 +170,34 @@ export default function StudentPortal() {
             </div>
           </section>
 
-          <section className="view view-narrow" style={show('scan')}>
-            <div className="view-header">
+          <section className={`${s.view} ${s['view-narrow']}`} style={show('scan')}>
+            <div className={s['view-header']}>
               <div>
                 <h2>QR Scanner</h2>
-                <p className="view-subtitle">Scan event or class check-in codes.</p>
+                <p className={s['view-subtitle']}>Scan event or class check-in codes.</p>
               </div>
             </div>
 
-            <div className="scan-card">
-              <div className="camera-box">
+            <div className={s['scan-card']}>
+              <div className={s['camera-box']}>
                 <div id="reader"></div>
               </div>
-              <button className="btn btn-primary" onClick={startScanner}>
+              <button className={`${s.btn} ${s['btn-primary']}`} onClick={startScanner}>
                 <i className="fa-solid fa-camera"></i> Start Scanning
               </button>
 
-              <div className="manual-checkin">
+              <div className={s['manual-checkin']}>
                 <label htmlFor="scan-code-input">Manual Code Check-in</label>
-                <div className="manual-row">
+                <div className={s['manual-row']}>
                   <input
                     type="text"
                     id="scan-code-input"
-                    className="input input-mono"
+                    className={`${s.input} ${s['input-mono']}`}
                     placeholder="Enter session or check-in code..."
                     value={manualCode}
                     onChange={(e) => setManualCode(e.target.value)}
                   />
-                  <button className="btn btn-primary" onClick={submitManual}>
+                  <button className={`${s.btn} ${s['btn-primary']}`} onClick={submitManual}>
                     Submit
                   </button>
                 </div>
@@ -209,33 +207,33 @@ export default function StudentPortal() {
         </main>
       </div>
 
-      <div className={`modal-overlay${joinOpen ? ' active' : ''}`}>
-        <div className="modal-card">
-          <div className="modal-head">
-            <div className="modal-title-wrap">
-              <div className="avatar avatar-sm">JC</div>
+      <div className={`${s['modal-overlay']} ${joinOpen ? s.active : ''}`}>
+        <div className={s['modal-card']}>
+          <div className={s['modal-head']}>
+            <div className={s['modal-title-wrap']}>
+              <div className={`${s.avatar} ${s['avatar-sm']}`}>JC</div>
               <div>
                 <h3>Join a Class</h3>
                 <p>Enter class code provided by instructor</p>
               </div>
             </div>
-            <button className="icon-btn" aria-label="Close" onClick={() => setJoinOpen(false)}>
+            <button className={s['icon-btn']} aria-label="Close" onClick={() => setJoinOpen(false)}>
               <i className="fa-solid fa-xmark"></i>
             </button>
           </div>
 
-          <form id="join-form" onSubmit={submitJoin}>
+          <form className={s['join-form']} onSubmit={submitJoin}>
             <label htmlFor="class-code-input">Class Code</label>
             <input
               type="text"
               id="class-code-input"
-              className="input input-mono input-upper"
+              className={`${s.input} ${s['input-mono']} ${s['input-upper']}`}
               placeholder="e.g. CS-301-2026"
               required
               value={classCode}
               onChange={(e) => setClassCode(e.target.value)}
             />
-            <button type="submit" className="btn btn-primary btn-block">
+            <button type="submit" className={`${s.btn} ${s['btn-primary']} ${s['btn-block']}`}>
               Join Class
             </button>
           </form>
@@ -243,6 +241,6 @@ export default function StudentPortal() {
       </div>
 
       {toastContainer}
-    </>
+    </div>
   )
 }

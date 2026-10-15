@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import s from '../styles/Toast.module.css'
 
 const icons = {
   success: 'fa-circle-check',
@@ -21,7 +22,7 @@ function ToastItem({ toast, onDone }) {
   }, [toast.id, onDone])
 
   return (
-    <div className={`toast toast-${toast.type}${show ? ' show' : ''}`}>
+    <div className={`${s.toast} ${s[`toast-${toast.type}`]} ${show ? s.show : ''}`}>
       <i className={`fa-solid ${icons[toast.type]}`}></i>
       <span>{toast.message}</span>
     </div>
@@ -40,7 +41,7 @@ export default function useToast() {
   }, [])
 
   const toastContainer = (
-    <div id="toast-container">
+    <div className={s['toast-container']}>
       {toasts.map((t) => (
         <ToastItem key={t.id} toast={t} onDone={remove} />
       ))}
