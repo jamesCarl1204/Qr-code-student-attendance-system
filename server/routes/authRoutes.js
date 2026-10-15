@@ -4,6 +4,5 @@ const { register_post, registerValidationRules, loginLimiter, loginValidationRul
 
 
 router.post('/api/student/register', registerValidationRules, register_post)
-
 router.post('/student/login', loginLimiter, loginValidationRules, login_post)
 module.exports = router
