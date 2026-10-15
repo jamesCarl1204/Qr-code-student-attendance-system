@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Landing from './pages/Landing'
-import StudentPortal from './pages/StudentPortal'
-import TeacherPortal from './pages/TeacherPortal'
+import Landing from './pages/Landing/Landing'
+import StudentPortal from './pages/StudentPortal/StudentPortal'
+import TeacherPortal from './pages/TeacherPortal/TeacherPortal'
 
 export default function App() {
   return (
