@@ -15,4 +15,4 @@ const createStudent = async (data) => {
 }
 
 
-module.exports = [ findByEmail, createStudent]
+module.exports = { findByEmail, createStudent }

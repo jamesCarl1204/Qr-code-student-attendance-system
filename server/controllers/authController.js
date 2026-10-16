@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const rateLimit = require('express-rate-limit');
 const { body, validationResult } = require('express-validator');
-const [findByEmail, createStudent ] = require('../model/studentModel');
+const { findByEmail, createStudent } = require('../model/studentModel');
 
 const MAX_AGE_SECONDS = 30 * 24 * 60 * 60;
 const SALT_ROUNDS = 12; // 
@@ -11,7 +11,7 @@ const SALT_ROUNDS = 12; //
 const registerValidationRules = [
     body('name').trim().notEmpty().withMessage('First name is required'),
     body('lastName').trim().notEmpty().withMessage('Last name is required'),
-    body('studentId').trim().isLength({ min: 8, max: 8 }).withMessage('Student ID must be exactly 8 digits'),
+    body('studentId').trim().isLength({ min: 8, max: 8 }).isNumeric().withMessage('Student ID must be exactly 8 digits'),
     body('email').trim().isEmail().normalizeEmail().withMessage('Enter a valid email'),
     body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
     body('confirmPassword').custom((value, { req }) => {
@@ -28,10 +28,11 @@ const loginValidationRules = [
 
 const loginLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 5,
+    limit: 5,
     message: { success: false, msg: 'Too many login attempts. Try again in 15 minutes.' },
     standardHeaders: true,
     legacyHeaders: false,
+    skipSuccessfulRequests: true
 });
 
 
@@ -118,10 +119,25 @@ const login_post = async (req, res) => {
     }
 };
 
+const logout_post = (req, res) => {
+    res.clearCookie('jwt', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+    })
+    res.json({success: true})
+}
+
+const check_get = (req, res) => {
+    res.json({success: true, role: req.user.role})
+}
+
 module.exports = {
     register_post,
     login_post,
     registerValidationRules,
     loginValidationRules,
     loginLimiter,
+    logout_post,
+    check_get
 };

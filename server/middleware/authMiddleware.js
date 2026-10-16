@@ -1,19 +1,17 @@
 const jwt = require('jsonwebtoken')
-const {pool} = require('../config/db')
 
-const requireAuth = (req, res, next)  => {
-    
-    const token = req.cookies.jwt;
+const requireAuth = (role) => (req, res, next) => {
+    const token = req.cookies.jwt
+    if (!token) return res.status(401).json({ success: false, msg: 'Not logged in' })
 
-    if(token) {
-        jwt.verify(token, 'secret', (err, decodedToken) => {
-            if(err) {
-                console.log(err.message)
-            } else {
-                console.log(decodedToken)
-                next()
-            }
-        })
-    }
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) return res.status(401).json({ success: false, msg: 'Invalid or expired session' })
+        if (role && decoded.role !== role) {
+            return res.status(403).json({ success: false, msg: 'Forbidden' })
+        }
+        req.user = decoded
+        next()
+    })
 }
 
+module.exports = { requireAuth }
