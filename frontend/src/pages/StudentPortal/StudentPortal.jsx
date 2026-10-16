@@ -9,6 +9,8 @@ import ClassesView from './views/ClassesView'
 import ArchivedView from './views/ArchivedView'
 import ScanView from './views/ScanView'
 import JoinClassModal from './components/JoinClassModal'
+import { logout } from '../../api/client'
+
 
 const navItems = [
   { key: 'classes', icon: 'fa-book-open', label: 'Classes' },
@@ -23,13 +25,18 @@ export default function StudentPortal() {
   const [tab, setTab] = useState('classes')
   const [joinOpen, setJoinOpen] = useState(false)
 
+  const handleLogout = async () => {
+    await logout()
+    navigate('/', {replace: true})
+  }
+
   return (
     <div className={s.app}>
       <Topbar mark="SP" title="Student Name" subtitle="Student ID: --------">
         <button className="btn btn-primary" onClick={() => setJoinOpen(true)}>
           <i className="fa-solid fa-plus"></i> Join Class
         </button>
-        <button className="btn btn-ghost" onClick={() => navigate('/')}>
+        <button className="btn btn-ghost" onClick={() => handleLogout()}>
           <i className="fa-solid fa-right-from-bracket"></i> Logout
         </button>
       </Topbar>

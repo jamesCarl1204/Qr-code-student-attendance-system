@@ -9,12 +9,18 @@ import ClassesView from './views/ClassesView'
 import ArchivedView from './views/ArchivedView'
 import AiChatView from './views/AiChatView'
 import CreateClassModal from './components/CreateClassModal'
+import { logout } from '../../api/client'
 
 const navItems = [
   { key: 'classes', icon: 'fa-book-open', label: 'Classes' },
   { key: 'archived', icon: 'fa-box-archive', label: 'Archived Class' },
   { key: 'ai-chat', icon: 'fa-robot', label: 'AI Assistant Chatbot' },
 ]
+
+const handleLogout = async () => {
+  await logout()
+  navigate('/', { replace: true})
+}
 
 export default function TeacherPortal() {
   const navigate = useNavigate()
@@ -29,7 +35,7 @@ export default function TeacherPortal() {
         <button className="btn btn-primary" onClick={() => setModalOpen(true)}>
           <i className="fa-solid fa-plus"></i> Create Class
         </button>
-        <button className="btn btn-ghost" onClick={() => navigate('/')}>
+        <button className="btn btn-ghost" onClick={() => handleLogout()}>
           <i className="fa-solid fa-right-from-bracket"></i> Logout
         </button>
       </Topbar>
