@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Landing from './pages/Landing/Landing'
 import StudentPortal from './pages/StudentPortal/StudentPortal'
 import TeacherPortal from './pages/TeacherPortal/TeacherPortal'
-import ProtectedRoute from './componets/ProtectedRoute/ProtectedRoute'
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 
 export default function App() {
   return (

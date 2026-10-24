@@ -12,7 +12,7 @@ export default function StudentLoginForm({ onSuccess }) {
     e.preventDefault()
     setErr({})
     try {
-      const data = await postJson('/student/login', form)
+      const data = await postJson('/api/student/login', form)
       if (!data.success) {
         setErr(data.errors ? firstError(data.errors) : { password: data.msg })
         return

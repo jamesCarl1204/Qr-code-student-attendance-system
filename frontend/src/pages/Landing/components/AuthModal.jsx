@@ -34,7 +34,7 @@ export default function AuthModal({ open, role, onClose }) {
         <div className={s['modal-header']}>
           <div className={s.brand}>
             <div className={s['logo-box']}>
-              <i className="fa-solid fa-qrcode"></i>
+              <i className={`fa-solid ${role === 'teacher' ? 'fa-qrcode' : 'fa-camera'}`}></i>
             </div>
             <div className={s['brand-text']}>
               <h3>{title}</h3>

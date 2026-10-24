@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import s from './Landing.module.css'
 import AuthModal from './components/AuthModal'
+import logo from '../../assets/100.png'
 
 export default function Landing() {
   const [open, setOpen] = useState(false)
@@ -50,11 +51,12 @@ export default function Landing() {
               <i className="fa-solid fa-arrow-right"></i>
             </div>
             <p className={s['card-desc']}>
-              View your digital QR pass, real-time subject logs, and personal attendance history.
+              Scan your teacher's QR code to check in, view subject logs, and track your
+              attendance history.
             </p>
             <div className={`${s['card-footer']} ${s['footer-student']}`}>
               <span>Student Portal</span>
-              <i className="fa-solid fa-qrcode"></i>
+              <i className="fa-solid fa-camera"></i>
             </div>
           </button>
 
@@ -67,12 +69,12 @@ export default function Landing() {
               <i className="fa-solid fa-arrow-right"></i>
             </div>
             <p className={s['card-desc']}>
-              Run live classroom QR scanning, manage class rosters, and generate attendance
+              Generate class QR codes, manage class rosters, and view real-time attendance
               reports.
             </p>
             <div className={`${s['card-footer']} ${s['footer-teacher']}`}>
               <span>Live Classroom</span>
-              <i className="fa-solid fa-camera"></i>
+              <i className="fa-solid fa-qrcode"></i>
             </div>
           </button>
         </div>
