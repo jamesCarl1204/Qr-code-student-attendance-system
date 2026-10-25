@@ -7,8 +7,8 @@ const findByEmail = async (email) => {
 
 const createStudent = async (data) => {
     const [result] = await pool.query(
-    `INSERT INTO students (first_name, middle_name, last_name, student_id_num, email, password, parent_email)
-    VALUES(?, ?, ? ,? ,? ,?, ?)`,
+    `INSERT INTO students (first_name, middle_name, last_name, student_id_number, email, password, parent_email)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`
     [data.name, data.middleName, data.lastName, data.studentId, data.email, data.hashedPassword, data.parentEmail]
     );
     return result.insertId
