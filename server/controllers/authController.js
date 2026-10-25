@@ -2,8 +2,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const rateLimit = require('express-rate-limit');
 const { body, validationResult } = require('express-validator');
-const { findByEmail, createStudent } = require('../model/studentModel');
-const { findTeacherByEmail } = require('../model/teacherModel');
+const { findByEmail, findByStudentIdNumber, findStudentById, createStudent } = require('../model/studentModel');
+const { findTeacherByEmail, findTeacherById } = require('../model/teacherModel');
 
 const MAX_AGE_SECONDS = 30 * 24 * 60 * 60;
 const SALT_ROUNDS = 12; // 
@@ -18,6 +18,10 @@ const registerValidationRules = [
         if (value !== req.body.password) throw new Error('Passwords do not match');
         return true;
     }),
+    body('studentId').trim()
+    .isLength({ min: 8, max: 8 }).withMessage('Student ID must be exactly 8 digits')
+    .isNumeric().withMessage('Student ID must be numbers only'),
+   body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
     body('parentEmail').trim().isEmail().normalizeEmail({ gmail_remove_dots: false }).withMessage('Enter a valid email'),
 ];
 
