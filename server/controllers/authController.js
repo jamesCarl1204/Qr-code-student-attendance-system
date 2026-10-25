@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const rateLimit = require('express-rate-limit');
 const { body, validationResult } = require('express-validator');
 const { findByEmail, createStudent } = require('../model/studentModel');
+const { findTeacherByEmail } = require('../model/teacherModel');
 
 const MAX_AGE_SECONDS = 30 * 24 * 60 * 60;
 const SALT_ROUNDS = 12; // 
@@ -119,6 +120,43 @@ const login_post = async (req, res) => {
     }
 };
 
+const teacher_login_post = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ success: false, errors: errors.array() });
+    }
+
+    const { email, password } = req.body;
+
+    try {
+        const teacher = await findTeacherByEmail(email);
+
+        if (!teacher) {
+            return res.status(401).json({ success: false, msg: 'Invalid email or password' });
+        }
+
+        const match = await bcrypt.compare(password, teacher.password);
+        if (!match) {
+            return res.status(401).json({ success: false, msg: 'Invalid email or password' });
+        }
+
+        const token = createToken({ id: teacher.id, role: teacher.role });
+
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: MAX_AGE_SECONDS * 1000,
+        });
+
+        res.status(200).json({ success: true, msg: 'Logged in successfully' });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, msg: 'Something went wrong. Please try again.' });
+    }
+};
+
 const logout_post = (req, res) => {
     res.clearCookie('jwt', {
         httpOnly: true,
@@ -139,5 +177,6 @@ module.exports = {
     loginValidationRules,
     loginLimiter,
     logout_post,
-    check_get
+    check_get,
+    teacher_login_post
 };
