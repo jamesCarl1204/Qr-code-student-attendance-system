@@ -94,3 +94,14 @@ body {
 .form { display: flex; flex-direction: column; gap: 4px; }
 .form label { font-size: 12px; font-weight: 500; color: var(--slate-700); margin: 4px 0; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.form-err { color: var(--danger); font-size: 11px; }
+.swatches { display: flex; gap: 8px; margin: 4px 0 8px; }
+.swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+.swatch.active { border-color: var(--slate-900); box-shadow: 0 0 0 2px var(--white) inset; }

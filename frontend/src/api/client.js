@@ -1,11 +1,16 @@
-export async function postJson(url, body) {
+async function request(method, url, body) {
   const res = await fetch(url, {
-    method: 'POST',
+    method,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
+    body: body === undefined ? undefined : JSON.stringify(body),
   })
   return res.json()
 }
+
+export const getJson = (url) => request('GET', url)
+export const postJson = (url, body) => request('POST', url, body)
+export const patchJson = (url, body) => request('PATCH', url, body)
+export const deleteJson = (url) => request('DELETE', url)
 
 export function firstError(errors) {
   if (!errors || errors.length === 0) return {}

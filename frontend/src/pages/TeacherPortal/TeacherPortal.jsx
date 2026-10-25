@@ -9,6 +9,7 @@ import ClassesView from './views/ClassesView'
 import ArchivedView from './views/ArchivedView'
 import AiChatView from './views/AiChatView'
 import CreateClassModal from './components/CreateClassModal'
+import useClasses from './hooks/useClasses'
 import { logout } from '../../api/client'
 
 const navItems = [
@@ -17,10 +18,10 @@ const navItems = [
   { key: 'ai-chat', icon: 'fa-robot', label: 'AI Assistant Chatbot' },
 ]
 
-
 export default function TeacherPortal() {
   const navigate = useNavigate()
   const { toasts, showToast, removeToast } = useToast()
+  const { classes, loading, reload, archive, remove } = useClasses()
 
   const [tab, setTab] = useState('classes')
   const [modalOpen, setModalOpen] = useState(false)
@@ -31,17 +32,36 @@ export default function TeacherPortal() {
   }, [])
 
   const handleLogout = async () => {
-  await logout()
-  navigate('/', { replace: true})
-}
+    await logout()
+    navigate('/', { replace: true })
+  }
+
+  const handleOpen = () => showToast('Class detail page is the next step.', 'info')
+
+  const handleArchive = async (c) => {
+    const data = await archive(c.id, !c.archived)
+    if (data.success) showToast(c.archived ? 'Class restored.' : 'Class archived.', 'success')
+    else showToast(data.msg || 'Failed.', 'error')
+  }
+
+  const handleDelete = async (c) => {
+    if (!window.confirm(`Delete "${c.subjectName}"? This cannot be undone.`)) return
+    const data = await remove(c.id)
+    if (data.success) showToast('Class deleted.', 'success')
+    else showToast(data.msg || 'Failed.', 'error')
+  }
 
   return (
     <div className={s.app}>
-      <Topbar mark="TP" title="Teacher Portal" subtitle="QR Attendance & AI Assistant">
+      <Topbar
+        mark="TP"
+        title={me?.name || 'Teacher Portal'}
+        subtitle="QR Attendance & AI Assistant"
+      >
         <button className="btn btn-primary" onClick={() => setModalOpen(true)}>
           <i className="fa-solid fa-plus"></i> Create Class
         </button>
-        <button className="btn btn-ghost" onClick={() => handleLogout()}>
+        <button className="btn btn-ghost" onClick={handleLogout}>
           <i className="fa-solid fa-right-from-bracket"></i> Logout
         </button>
       </Topbar>
@@ -56,8 +76,25 @@ export default function TeacherPortal() {
         />
 
         <main className={s.content}>
-          {tab === 'classes' && <ClassesView onCreate={() => setModalOpen(true)} />}
-          {tab === 'archived' && <ArchivedView />}
+          {tab === 'classes' && (
+            <ClassesView
+              classes={classes}
+              loading={loading}
+              onCreate={() => setModalOpen(true)}
+              onOpen={handleOpen}
+              onArchive={handleArchive}
+              onDelete={handleDelete}
+            />
+          )}
+          {tab === 'archived' && (
+            <ArchivedView
+              classes={classes}
+              loading={loading}
+              onOpen={handleOpen}
+              onArchive={handleArchive}
+              onDelete={handleDelete}
+            />
+          )}
           {tab === 'ai-chat' && <AiChatView showToast={showToast} />}
         </main>
       </div>
@@ -65,6 +102,7 @@ export default function TeacherPortal() {
       <CreateClassModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
+        onCreated={reload}
         showToast={showToast}
       />
       <ToastContainer toasts={toasts} onDone={removeToast} />
