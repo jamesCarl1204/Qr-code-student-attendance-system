@@ -17,7 +17,7 @@ export default function TeacherLoginForm({ onSuccess }) {
         setErr(data.errors ? firstError(data.errors) : { password: data.msg })
         return
       }
-      onSuccess()
+      onSuccess(data.role)
     } catch (error) {
       console.error(error)
     }

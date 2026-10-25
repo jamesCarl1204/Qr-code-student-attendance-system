@@ -17,10 +17,6 @@ const navItems = [
   { key: 'ai-chat', icon: 'fa-robot', label: 'AI Assistant Chatbot' },
 ]
 
-const handleLogout = async () => {
-  await logout()
-  navigate('/', { replace: true})
-}
 
 export default function TeacherPortal() {
   const navigate = useNavigate()
@@ -28,6 +24,16 @@ export default function TeacherPortal() {
 
   const [tab, setTab] = useState('classes')
   const [modalOpen, setModalOpen] = useState(false)
+  const [me, setMe] = useState(null)
+
+  useEffect(() => {
+    fetch('/api/me').then((r) => r.json()).then((d) => d.success && setMe(d))
+  }, [])
+
+  const handleLogout = async () => {
+  await logout()
+  navigate('/', { replace: true})
+}
 
   return (
     <div className={s.app}>

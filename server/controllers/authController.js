@@ -13,17 +13,16 @@ const registerValidationRules = [
     body('name').trim().notEmpty().withMessage('First name is required'),
     body('lastName').trim().notEmpty().withMessage('Last name is required'),
     body('studentId').trim().isLength({ min: 8, max: 8 }).isNumeric().withMessage('Student ID must be exactly 8 digits'),
-    body('email').trim().isEmail().normalizeEmail().withMessage('Enter a valid email'),
-    body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
+    body('email').trim().isEmail().normalizeEmail({ gmail_remove_dots: false }).withMessage('Enter a valid email'),
     body('confirmPassword').custom((value, { req }) => {
         if (value !== req.body.password) throw new Error('Passwords do not match');
         return true;
     }),
-    body('parentEmail').trim().isEmail().normalizeEmail().withMessage('Enter a valid parent/guardian email'),
+    body('parentEmail').trim().isEmail().normalizeEmail({ gmail_remove_dots: false }).withMessage('Enter a valid email'),
 ];
 
 const loginValidationRules = [
-    body('email').trim().isEmail().normalizeEmail().withMessage('Enter a valid email'),
+    body('email').trim().isEmail().normalizeEmail({ gmail_remove_dots: false }).withMessage('Enter a valid email'),
     body('password').notEmpty().withMessage('Password is required'),
 ];
 
@@ -53,11 +52,19 @@ const register_post = async (req, res) => {
     try {
         const existing = await findByEmail(email);
         if (existing) {
-            return res.status(409).json({
-                success: false,
-                errors: [{ path: 'email', msg: 'Email already registered' }],
-            });
-        }
+        return res.status(409).json({
+        success: false,
+        errors: [{ path: 'email', msg: 'Email already registered' }],
+       });
+     }
+
+       const existingId = await findByStudentIdNumber(studentId);
+       if (existingId) {
+         return res.status(409).json({
+        success: false,
+        errors: [{ path: 'studentId', msg: 'Student ID already registered' }],
+    });
+}
 
         const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
@@ -76,10 +83,16 @@ const register_post = async (req, res) => {
 
         res.status(201).json({ success: true, msg: 'Account created successfully' });
 
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ success: false, msg: 'Something went wrong. Please try again.' });
+   } catch (err) {
+    if (err.code === 'ER_DUP_ENTRY') {
+        return res.status(409).json({
+            success: false,
+            errors: [{ path: 'email', msg: 'Email or Student ID already registered' }],
+        });
     }
+    console.error(err);
+    res.status(500).json({ success: false, msg: 'Something went wrong. Please try again.' });
+}
 };
 
 
@@ -149,8 +162,7 @@ const teacher_login_post = async (req, res) => {
             maxAge: MAX_AGE_SECONDS * 1000,
         });
 
-        res.status(200).json({ success: true, msg: 'Logged in successfully' });
-
+      res.status(200).json({ success: true, role: teacher.role, msg: 'Logged in successfully' });
     } catch (err) {
         console.error(err);
         res.status(500).json({ success: false, msg: 'Something went wrong. Please try again.' });
@@ -170,6 +182,32 @@ const check_get = (req, res) => {
     res.json({success: true, role: req.user.role})
 }
 
+const me_get = async (req, res) => {
+    try {
+        if (req.user.role === 'student') {
+            const s = await findStudentById(req.user.id);
+            if (!s) return res.status(404).json({ success: false, msg: 'User not found' });
+            return res.json({
+                success: true,
+                role: 'student',
+                name: `${s.first_name} ${s.last_name}`,
+                idNumber: s.student_id_number,
+            });
+        }
+        const t = await findTeacherById(req.user.id);
+        if (!t) return res.status(404).json({ success: false, msg: 'User not found' });
+        res.json({
+            success: true,
+            role: t.role,
+            name: `${t.first_name} ${t.last_name}`,
+            idNumber: t.teacher_id_number,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, msg: 'Something went wrong.' });
+    }
+};
+
 module.exports = {
     register_post,
     login_post,
@@ -178,5 +216,6 @@ module.exports = {
     loginLimiter,
     logout_post,
     check_get,
-    teacher_login_post
+    teacher_login_post,
+    me_get
 };

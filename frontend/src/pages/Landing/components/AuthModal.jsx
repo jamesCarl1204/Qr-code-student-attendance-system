@@ -9,7 +9,6 @@ export default function AuthModal({ open, role, onClose }) {
   const navigate = useNavigate()
   const [mode, setMode] = useState('login')
 
-  // balik sa login tuwing magbubukas ulit
   useEffect(() => {
     if (open) setMode('login')
   }, [open, role])
@@ -46,8 +45,11 @@ export default function AuthModal({ open, role, onClose }) {
           </button>
         </div>
 
-        {role === 'teacher' && <TeacherLoginForm onSuccess={() => navigate('/teacher/dashboard')} />}
-
+        {role === 'teacher' && (
+        <TeacherLoginForm
+        onSuccess={(r) => navigate(r === 'admin' ? '/admin/dashboard' : '/teacher/dashboard')}
+       />
+       )}
         {role === 'student' && mode === 'login' && (
           <StudentLoginForm onSuccess={() => navigate('/student/dashboard')} />
         )}

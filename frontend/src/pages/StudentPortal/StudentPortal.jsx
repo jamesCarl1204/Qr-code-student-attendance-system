@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import s from './StudentPortal.module.css'
 import useToast from '../../hooks/useToast'
@@ -25,14 +25,21 @@ export default function StudentPortal() {
   const [tab, setTab] = useState('classes')
   const [joinOpen, setJoinOpen] = useState(false)
 
+
+  const [me, setMe] = useState(null)
+  useEffect(() => {
+  fetch('/api/me').then((r) => r.json()).then((d) => d.success && setMe(d))
+  }, [])
+
   const handleLogout = async () => {
     await logout()
     navigate('/', {replace: true})
   }
 
+
   return (
     <div className={s.app}>
-      <Topbar mark="SP" title="Student Name" subtitle="Student ID: --------">
+    <Topbar mark="SP" title={me?.name || 'Student'} subtitle={`Student ID: ${me?.idNumber || '--------'}`}>
         <button className="btn btn-primary" onClick={() => setJoinOpen(true)}>
           <i className="fa-solid fa-plus"></i> Join Class
         </button>
