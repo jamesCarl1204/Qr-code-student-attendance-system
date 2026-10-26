@@ -1,51 +1,53 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import s from '../TeacherPortal.module.css'
 import { CLASS_COLORS } from '../classColors'
 
-export default function ClassCard({ cls, archived, onToggleArchive }) {
-  const navigate = useNavigate()
+export default function ClassCard({ c, onOpen, onArchive, onDelete }) {
   const [copied, setCopied] = useState(false)
-  const color = CLASS_COLORS[cls.color] || CLASS_COLORS.blue
+  const color = CLASS_COLORS[c.color] || CLASS_COLORS.blue
 
   const copyCode = async () => {
     try {
-      await navigator.clipboard.writeText(cls.class_code)
+      await navigator.clipboard.writeText(c.classCode)
       setCopied(true)
       setTimeout(() => setCopied(false), 1500)
     } catch {
-      // clipboard blocked, ignore
+      // clipboard blocked
     }
   }
 
   return (
-    <article className={s.classCard}>
-      <div className={s.classBar} style={{ background: color }} />
-      <div className={s.classBody}>
-        <h3 className={s.classSubject}>{cls.subject_name}</h3>
-        <p className={s.classBlock}>{cls.section}</p>
-        <button type="button" className={s.codePill} onClick={copyCode} title="Click to copy">
-          {copied ? 'Copied!' : cls.class_code}
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary btn-block"
-          onClick={() => navigate(`/teacher/classes/${cls.id}`)}
-        >
-          Open class <i className="fa-solid fa-chevron-right"></i>
-        </button>
+    <article className={s.classCard} style={{ '--accent': color }}>
+      <div className={s.cardTop}>
+        <div>
+          <h3>{c.subjectName}</h3>
+          <p className={s.classMeta}>{c.section || 'No section'}</p>
+        </div>
+        <div className={s.cardIcon}>
+          <i className="fa-solid fa-book"></i>
+        </div>
       </div>
-      <div className={s.classFoot}>
-        <span>
-          <i className="fa-solid fa-user-group"></i> {cls.student_count} student
-          {Number(cls.student_count) === 1 ? '' : 's'}
+
+      <div className={s.cardInfo}>
+        <button type="button" className={s.code} onClick={copyCode} title="Click to copy">
+          {copied ? 'Copied!' : <b>{c.classCode}</b>}
+        </button>
+        <span className={s.students}>
+          <i className="fa-solid fa-user-group"></i> {c.studentCount} student
+          {Number(c.studentCount) === 1 ? '' : 's'}
         </span>
-        <button
-          type="button"
-          className="btn btn-outline"
-          onClick={() => onToggleArchive(cls, !archived)}
-        >
-          {archived ? 'Restore' : 'Archive'}
+      </div>
+
+      <button type="button" className={s.openBtn} onClick={() => onOpen(c)}>
+        Open class <i className="fa-solid fa-chevron-right"></i>
+      </button>
+
+      <div className={s.classActions}>
+        <button type="button" className="btn btn-outline" onClick={() => onArchive(c)}>
+          {c.archived ? 'Restore' : 'Archive'}
+        </button>
+        <button type="button" className="btn btn-ghost" onClick={() => onDelete(c)}>
+          Delete
         </button>
       </div>
     </article>

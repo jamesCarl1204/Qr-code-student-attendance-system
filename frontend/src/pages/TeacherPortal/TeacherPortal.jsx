@@ -36,8 +36,8 @@ export default function TeacherPortal() {
     navigate('/', { replace: true })
   }
 
-  const handleOpen = () => showToast('Class detail page is the next step.', 'info')
-
+  //const handleOpen = () => showToast('Class detail page is the next step.', 'info')
+       const handleOpen = (c) => navigate(`/teacher/classes/${c.id}`)
   const handleArchive = async (c) => {
     const data = await archive(c.id, !c.archived)
     if (data.success) showToast(c.archived ? 'Class restored.' : 'Class archived.', 'success')
