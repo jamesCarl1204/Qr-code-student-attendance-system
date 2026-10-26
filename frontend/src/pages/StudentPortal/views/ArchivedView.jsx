@@ -2,7 +2,7 @@ import s from '../StudentPortal.module.css'
 import EmptyState from '../../../components/EmptyState/EmptyState'
 import StudentClassList from '../components/StudentClassList'
 
-export default function ArchivedView({ classes, loading, onLeave }) {
+export default function ArchivedView({ classes, loading, onLeave, onOpen }) {
   const list = classes.filter((c) => c.archived)
 
   return (
@@ -19,7 +19,7 @@ export default function ArchivedView({ classes, loading, onLeave }) {
           text="Archived courses from past terms will appear here."
         />
       ) : (
-        <StudentClassList classes={list} onLeave={onLeave} />
+        <StudentClassList classes={list} onLeave={onLeave} onOpen={onOpen} />
       )}
     </section>
   )

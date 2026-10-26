@@ -2,7 +2,7 @@ import s from '../StudentPortal.module.css'
 import EmptyState from '../../../components/EmptyState/EmptyState'
 import StudentClassList from '../components/StudentClassList'
 
-export default function ClassesView({ classes, loading, onJoin, onLeave }) {
+export default function ClassesView({ classes, loading, onJoin, onLeave, onOpen }) {
   const list = classes.filter((c) => !c.archived)
 
   return (
@@ -23,7 +23,7 @@ export default function ClassesView({ classes, loading, onJoin, onLeave }) {
           </button>
         </EmptyState>
       ) : (
-        <StudentClassList classes={list} onLeave={onLeave} />
+        <StudentClassList classes={list} onLeave={onLeave} onOpen={onOpen} />
       )}
     </section>
   )
